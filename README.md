@@ -1,1 +1,1 @@
-# ladmex
+Repository for linux administrator study
