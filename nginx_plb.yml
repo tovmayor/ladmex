@@ -26,9 +26,9 @@
       state: started 
       enabled: yes
  
-  - name: remove configs from sites-enabled
+  - name: remove default config from sites-enabled
     file:
-      path: /etc/nginx/sites-enabled/*
+      path: /etc/nginx/sites-enabled/default
       state: absent
 
   - name: copying nginx proxy config file from repo to sites-enabled
