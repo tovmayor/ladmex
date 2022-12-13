@@ -8,7 +8,7 @@
     apt:
       name: git
       state: present
-      update_cache=yes
+      update_cache: yes
 
   - name: Clone a repo from github
     git:
@@ -26,7 +26,7 @@
       state: started 
       enabled: yes
   
-    - name: copying nginx proxy config file from repo to sites-enabled
+  - name: copying nginx proxy config file from repo to sites-enabled
     fetch:
       src: /root/ladmex/nginx_upstream.conf
       dest: /etc/nginx/sites-enabled/
