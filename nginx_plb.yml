@@ -26,10 +26,10 @@
       state: started 
       enabled: yes
  
-  - name: copying nginx proxy config file from repo to sites-enabled
-    file:
-      path: /etc/nginx/sites-enabled/*
-      state: absent
+  # - name: copying nginx proxy config file from repo to sites-enabled
+  #   file:
+  #     path: /etc/nginx/sites-enabled/*
+  #     state: absent
 
   - name: copying nginx proxy config file from repo to sites-enabled
     copy:
