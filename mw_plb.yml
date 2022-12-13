@@ -1,6 +1,6 @@
 ---
 - name: install nginx, copy nginx config
-  hosts: mediawiki
+  hosts: mediawikis
   become: true
 
   tasks:
@@ -12,7 +12,6 @@
       update_cache: yes
       with_items:
         - 'apache2'
-#        - 'mariadb-server'
         - 'php'
         - 'php-mysql'
         - 'libapache2-mod-php'
@@ -20,26 +19,15 @@
         - 'php-mbstring'
         - 'mediawiki'
 
-  # - name: enable on boot
-  #   service: 
-  #     name: nginx 
-  #     state: started 
-  #     enabled: yes
- 
-  # - name: remove default config from sites-enabled
-  #   file:
-  #     path: /etc/nginx/sites-enabled/default
-  #     state: absent
-
   - name: copying mediawiki config file from repo to /etc/mediawiki
     copy:
       src: /root/ladmex/LocalSettings.php
-      dest: /etc/nginx/sites-enabled/
+      dest: /etc/mediawiki/
     notify: 
-       - restart nginx
+       - restart apache2
 
   handlers: 
-  - name: restart nginx
+  - name: restart apache2
     service: 
-      name: nginx
+      name: apache2
       state: restarted

@@ -1,0 +1,51 @@
+---
+- name: install maria-db server, copy cnfig
+  hosts: mysql_master
+  become: true
+
+  tasks:
+
+  - name: install maria-db server
+    apt: 
+      name: maria-db 
+      state: present 
+
+  - name: remove default config from mariadb.conf.d
+    file:
+      path: /etc/mysql/mariadb.conf.d/50-server.cnf
+      state: absent
+
+  - name: remove default config from etc/mysql      
+    file:
+      path: /etc/mysql/my.conf
+      state: absent
+
+  - name: copying maria-db config file from repo to mariadb.conf.d
+    copy:
+      src: /root/ladmex/50-server.cnf
+      dest: /etc/mysql/mariadb.conf.d/
+
+  - name: copying maria-db config file from repo to etc/mysql
+    copy:
+      src: /root/ladmex/my.cnf
+      dest: /etc/mysql/
+    notify: 
+       - restart maria-db
+
+  - name: creating database my_wiki
+    mysql_db:
+      name: my_wiki
+      
+
+
+  - name: restoring database from backup
+    mysql:
+
+
+
+
+  handlers: 
+  - name: restart maria-db
+    service: 
+      name: maria-db
+      state: restarted
