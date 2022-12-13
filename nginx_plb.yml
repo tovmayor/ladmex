@@ -4,16 +4,16 @@
   become: true
 
   tasks:
-  - name: install git
-    apt:
-      name: git
-      state: present
-      update_cache: yes
+  # - name: install git
+  #   apt:
+  #     name: git
+  #     state: present
+  #     update_cache: yes
 
-  - name: Clone a repo from github
-    git:
-      repo: https://github.com/tovmayor/ladmex.git
-      dest: /root/ladmex
+  # - name: Clone a repo from github
+  #   git:
+  #     repo: https://github.com/tovmayor/ladmex.git
+  #     dest: /root/ladmex
 
   - name: install nginx
     apt: 
@@ -27,10 +27,10 @@
       enabled: yes
   
   - name: copying nginx proxy config file from repo to sites-enabled
-    fetch:
+    copy:
       src: /root/ladmex/nginx_upstream.conf
       dest: /etc/nginx/sites-enabled/
-      flat: yes
+#      flat: yes
     notify: 
        - restart nginx
 
