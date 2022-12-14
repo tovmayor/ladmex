@@ -39,7 +39,8 @@
        - restart mariadb-server
 
   - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in db1 and db2
-    community.mysql.mysql_user:
+    #community.mysql.
+    mysql_user:
       login_host: 'localhost'
       login_user: 'root'
       login_password: ''
