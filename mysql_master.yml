@@ -35,6 +35,8 @@
 
   - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in db1 and db2
     community.mysql.mysql_user:
+      login_user: root
+      #login_password:
       state: present
       name: root
       password: MW@2022!
