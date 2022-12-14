@@ -4,8 +4,8 @@
 #user = "some"
 #password = "very complex"
 
-MYSQL='mysql --defaults-extra-file=/root/my_sql.cnf --skip-column-names'
-DUMP='mysqldump --defaults-extra-file=/root/my_sql.cnf --master-data'
+MYSQL='mysql --defaults-extra-file=/root/.my.cnf --skip-column-names'
+DUMP='mysqldump --defaults-extra-file=/root/.my.cnf --master-data'
 
 #date=$(date '+%Y-%m-%d')
 
