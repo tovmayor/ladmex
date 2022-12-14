@@ -1,6 +1,7 @@
 ---
 - name: install maria-db server, copy cnfig
-  hosts: mysql_master
+  # hosts: mysql_master
+  hosts: mysql
   become: true
 
   tasks:
@@ -32,16 +33,24 @@
     notify: 
        - restart maria-db
 
+  - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in db1 and db2
+    community.mysql.mysql_user:
+      state: present
+      name: root
+      password: MW@2022!
+      priv: '*.*:ALL,GRANT'
+
+
   - name: creating database my_wiki
     mysql_db:
       name: my_wiki
       state: present
 
 
-  - name: restoring database from backup
-    mysql:
-      state: import
-      target: /root/ladmex/backup/my_wiki
+  # - name: restoring database from backup
+  #   mysql:
+  #     state: import
+  #     target: /root/ladmex/backup/my_wiki/*
 
 
 

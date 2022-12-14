@@ -1,5 +1,5 @@
 #!/bin/bash
-# adding client config file  with mesql username & password /home/admin/my_sql.cnf like:
+# adding client config file  with mesql username & password /root/my_sql.cnf like:
 #[client]
 #user = "some"
 #password = "very complex"
