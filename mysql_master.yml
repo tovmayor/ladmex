@@ -11,6 +11,11 @@
       name: mariadb-server
       state: present 
 
+  - name: install python3-pymysql
+    apt: 
+      name: python3-pymysql
+      state: present 
+
   - name: remove default config from mariadb.conf.d
     file:
       path: /etc/mysql/mariadb.conf.d/50-server.cnf
