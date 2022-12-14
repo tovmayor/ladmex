@@ -51,6 +51,10 @@
       #priv: '*.*:ALL,GRANT'
       state: present
 
+  - name: copying maria-db creds file .my.cnf from admin host to mysql_host
+    copy:
+      src: /root/.my.cnf
+      dest: /root/
 
   - name: creating database my_wiki
     mysql_db:
