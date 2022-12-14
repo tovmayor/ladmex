@@ -6,9 +6,9 @@
 
   tasks:
 
-  - name: install maria-db server
+  - name: install mariadb-server
     apt: 
-      name: maria-db 
+      name: mariadb-server
       state: present 
 
   - name: remove default config from mariadb.conf.d
@@ -31,7 +31,7 @@
       src: /root/ladmex/my.cnf
       dest: /etc/mysql/
     notify: 
-       - restart maria-db
+       - restart mariadb-server
 
   - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in db1 and db2
     community.mysql.mysql_user:
@@ -52,10 +52,8 @@
   #     state: import
   #     target: /root/ladmex/backup/my_wiki/*
 
-
-
   handlers: 
-  - name: restart maria-db
+  - name: restart mariadb-server
     service: 
-      name: maria-db
+      name: mariadb-server
       state: restarted
