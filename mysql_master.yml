@@ -60,17 +60,25 @@
       name: my_wiki
       state: present
 
-  # - name: copying wiki db backup folder to mysql_host
-  #   copy:
-  #     src: /root/ladmex/backup
-  #     dest: /root/
+  - name: copying wiki db backup folder to mysql_host
+    copy:
+      src: /root/ladmex/backup
+      dest: /root/
 
-  - name: restoring database from backup
-    mysql_db:
-      name: my_wiki
-      state: import
-      target: /root/backup/my_wiki/my_wiki.actor
-      #delegate_to: mysql_master
+  - name: find backup db tables
+    find: paths=/root/backup/my_wiki/ patterns="*.gz"
+    register: find_result
+  - name: gunzip db tables files
+    unarchive: src="{{ item.path }}" dest=/root/backup/my_wiki/
+    with_items: "{{ find_result.files }}"
+      
+  
+  # - name: restoring database from backup
+  #   mysql_db:
+  #     name: my_wiki
+  #     state: import
+  #     target: /root/backup/my_wiki/my_wiki.actor
+  #     #delegate_to: mysql_master
 
   handlers: 
   - name: restart mariadb-server
