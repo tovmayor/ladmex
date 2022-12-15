@@ -50,6 +50,11 @@
       priv: '*.*:ALL,GRANT'
       state: present
 
+  - name: remove prev backup folder
+    file:
+      path: /root/backup
+      state: absent
+
   - name: copying maria-db creds file .my.cnf from admin host to mysql_host
     copy:
       src: /root/.my.cnf
