@@ -39,7 +39,6 @@
        - restart mariadb-server
 
   - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in db1 and db2
-    #community.mysql.
     mysql_user:
       # login_host: 'localhost'
       # login_user: 'root'
@@ -61,11 +60,15 @@
       name: my_wiki
       state: present
 
+  - name: copying wiki db backup folder to mysql_host
+    copy:
+      src: /root/ladmex/backup
+      dest: /root/
 
   # - name: restoring database from backup
   #   mysql:
   #     state: import
-  #     target: /root/ladmex/backup/my_wiki/*
+  #     target: /root/backup/my_wiki/*
 
   handlers: 
   - name: restart mariadb-server
