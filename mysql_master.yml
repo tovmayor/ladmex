@@ -3,8 +3,8 @@
   hosts: mysql
   become: true
   vars:
-    local_repo: '/root/backup'
-
+    local_repo: '/root/ladmex'
+    remote_work_folder: 
 
   tasks:
 
