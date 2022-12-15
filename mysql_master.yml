@@ -38,7 +38,7 @@
     notify: 
       - restart mariadb-server
 
-  - name: Create user with password, all database privileges and 'WITH GRANT OPTION'
+  - name: Create user with password, all database privileges 'WITH GRANT OPTION'
     mysql_user:
       # login_host: 'localhost'
       # login_user: 'root'
@@ -49,6 +49,18 @@
       login_unix_socket: /run/mysqld/mysqld.sock
       priv: '*.*:ALL,GRANT'
       state: present
+
+  - name: Grant user root from any host all privileges 'WITH GRANT OPTION'
+    mysql_user:
+      # login_host: 'localhost'
+      # login_user: 'root'
+      # login_password: ''
+      name: root
+      password: MW@2022!
+      host: '%'
+      login_unix_socket: /run/mysqld/mysqld.sock
+      priv: '*.*:ALL,GRANT'
+      state: present    
 
   - name: remove prev backup folder
     file:
