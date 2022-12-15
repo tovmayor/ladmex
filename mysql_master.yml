@@ -68,7 +68,7 @@
   - name: restoring database from backup
     mysql:
       state: import
-      target: /root/backup/my_wiki/*
+      target: /root/backup/my_wiki/my_wiki.actor.gz
 
   handlers: 
   - name: restart mariadb-server
