@@ -69,9 +69,9 @@
     mysql_db:
       name: my_wiki
       state: import
-      target: /root/backup/my_wiki/*
+      target: /root/ladmex/backup/my_wiki/*
       #my_wiki.actor.gz
-      delegate_to: mysql_master
+      #delegate_to: mysql_master
 
   handlers: 
   - name: restart mariadb-server
