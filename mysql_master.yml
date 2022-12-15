@@ -80,7 +80,7 @@
     with_items: "{{ find_result.files }}"
   
   - name: restore tables to db
-    command: for s in `ls /root/backup/my_wiki/`; do mysql --defaults-extra-file=/root/.my.cnf my_wiki < /root/backup/my_wiki/$s; done
+    shell: for s in `ls /root/backup/my_wiki/`; do mysql --defaults-extra-file=/root/.my.cnf my_wiki < /root/backup/my_wiki/$s; done
 
 
   # - name: restoring database from backup
