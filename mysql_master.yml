@@ -37,8 +37,13 @@
     copy:
       src: '{{ local_repo }}/my.cnf'
       dest: /etc/mysql/
-    notify: 
-      - restart mariadb-server
+    # notify: 
+    #   - restart mariadb-server
+
+  - name: restart mariadb-server
+    service: 
+      name: mariadb
+      state: restarted
 
   - name: Create user with password, all database privileges 'WITH GRANT OPTION'
     mysql_user:
@@ -52,11 +57,13 @@
       priv: '*.*:ALL,GRANT'
       state: present
 
+  - name: copying maria-db creds file .my.cnf from admin host to mysql_host
+    copy:
+      src: /root/.my.cnf
+      dest: /root/
+
   - name: Grant user root from any host all privileges 'WITH GRANT OPTION'
     mysql_user:
-      # login_host: 'localhost'
-      # login_user: 'root'
-      # login_password: ''
       name: root
       password: MW@2022!
       host: '%'
@@ -64,32 +71,20 @@
       priv: '*.*:ALL,GRANT'
       state: present    
 
-  - name: remove prev backup folder
-    file:
-      path: /root/backup/
-      state: absent
-
-  - name: copying maria-db creds file .my.cnf from admin host to mysql_host
-    copy:
-      src: /root/.my.cnf
-      dest: /root/
-
   - name: creating database my_wiki
     mysql_db:
       name: my_wiki
       state: present
 
+  - name: remove prev backup folder
+    file:
+      path: /root/backup/
+      state: absent
+
   - name: copying wiki db backup folder to mysql_host
     copy:
       src: '{{ local_repo }}/backup'
       dest: /root/
-
-  # - name: find backup db tables
-  #   find: paths=/root/backup/my_wiki/ patterns="*.gz"
-  #   register: find_result
-  # - name: gunzip db tables files
-  #   unarchive: src="{{ item.path }}" dest=/root/backup/my_wiki/
-  #   with_items: "{{ find_result.files }}"
 
   - name: find gz db tables
     find: paths=/root/backup/my_wiki/ patterns="*.gz"
@@ -102,15 +97,8 @@
     shell: for s in `ls /root/backup/my_wiki/`; do mysql --defaults-extra-file=/root/.my.cnf my_wiki < /root/backup/my_wiki/$s; done
 
 
-  # - name: restoring database from backup
-  #   mysql_db:
-  #     name: my_wiki
-  #     state: import
-  #     target: /root/backup/my_wiki/my_wiki.actor
-  #     #delegate_to: mysql_master
+
+  - name: Reset master binlog
+    command: /usr/bin/mysql -u root -e "RESET MASTER"
 
   handlers: 
-  - name: restart mariadb-server
-    service: 
-      name: mariadb
-      state: restarted
