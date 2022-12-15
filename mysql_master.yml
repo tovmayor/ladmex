@@ -47,7 +47,7 @@
       password: MW@2022!
       host: localhost
       login_unix_socket: /run/mysqld/mysqld.sock
-      #priv: '*.*:ALL,GRANT'
+      priv: '*.*:ALL,GRANT'
       state: present
 
   - name: copying maria-db creds file .my.cnf from admin host to mysql_host
@@ -65,14 +65,20 @@
       src: /root/ladmex/backup
       dest: /root/
 
-  - name: find backup db tables
-    find: paths=/root/backup/my_wiki/ patterns="*.gz"
-    register: find_result
-  - name: gunzip db tables files
-    unarchive: src="{{ item.path }}" dest=/root/backup/my_wiki/
-    with_items: "{{ find_result.files }}"
-      
+  # - name: find backup db tables
+  #   find: paths=/root/backup/my_wiki/ patterns="*.gz"
+  #   register: find_result
+  # - name: gunzip db tables files
+  #   unarchive: src="{{ item.path }}" dest=/root/backup/my_wiki/
+  #   with_items: "{{ find_result.files }}"
+
+  - name: gunzip backup db tables      
+    command: gunzip /root/backup/my_wiki/*.gz
   
+  - name: restore tables to db
+    command: for s in `ls /root/backup/my_wiki/`; do mysql --defaults-extra-file=/root/.my.cnf my_wiki < /root/backup/my_wiki/$s; done
+
+
   # - name: restoring database from backup
   #   mysql_db:
   #     name: my_wiki

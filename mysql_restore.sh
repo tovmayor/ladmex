@@ -8,6 +8,9 @@ for s in `ls $BACKUP_PATH/$DB`;
         gunzip $BACKUP_PATH/$DB/$s;
         echo "Import $s";
         $MYSQL $DB < $BACKUP_PATH/$DB/$s;
-
 done
+
+
+#for s in `ls /root/backup/my_wiki`; do mysql --defaults-extra-file=/root/.my.cnf my_wiki < /root/backup/$s; done
+
 
