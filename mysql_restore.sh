@@ -4,28 +4,24 @@
 #user = "some"
 #password = "very complex"
 
-MYSQL='mysql --defaults-extra-file=/root/.my.cnf --skip-column-names'
-DUMP='mysqldump --defaults-extra-file=/root/.my.cnf --master-data'
 
-date=$(date '+%Y-%m-%d')
+#!/bin/bash
+MYSQL='mysql --defaults-extra-file=/root/.my.cnf'
+DB='my_wiki'
 
-if [ ! -d backup ]; 
-    then 
-        mkdir backup
-	mkdir backup/$date
-    else 
-	mkdir backup/$date
-#        rm -rf ./backup/*
-fi
-
-for s in `$MYSQL -e "SHOW DATABASES LIKE '%wiki'"`;
+for s in `ls /root/backup/$DB`;
     do
-        mkdir ./backup/$date/$s;
+        echo "Import $s"
+        $MYSQL DB < $s;
 
-        for t in `$MYSQL -e "SHOW TABLES FROM $s"`;
-            do
-                echo -e "$s.$t\n";
-                $DUMP $s $t | gzip -3 > ./backup/$date/$s/$s.$t.gz;
+done
+
+
+for s in `ls /root/backup/$DB`;
+    do
+        #t=`awk -F. '{print $2}'`;
+        #echo -e "Import table $t\n";
+        $MYSQL DB < $s;
         done
 
 done
