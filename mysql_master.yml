@@ -36,7 +36,7 @@
       src: /root/ladmex/my.cnf
       dest: /etc/mysql/
     notify: 
-       - restart mariadb-server
+      - restart mariadb-server
 
   - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in db1 and db2
     mysql_user:
@@ -65,13 +65,13 @@
       src: /root/ladmex/backup
       dest: /root/
 
-  # - name: restoring database from backup
-  #   mysql:
-  #     state: import
-  #     target: /root/backup/my_wiki/*
+  - name: restoring database from backup
+    mysql:
+      state: import
+      target: /root/backup/my_wiki/*
 
   handlers: 
   - name: restart mariadb-server
     service: 
-      name: mariadb-server
+      name: mariadb
       state: restarted
