@@ -1,8 +1,10 @@
 ---
 - name: install maria-db server, copy cnfig
-  # hosts: mysql_master
   hosts: mysql
   become: true
+  vars:
+    local_repo: '/root/backup'
+
 
   tasks:
 
@@ -28,12 +30,12 @@
 
   - name: copying maria-db config file from repo to mariadb.conf.d
     copy:
-      src: /root/ladmex/50-server.cnf
+      src: '{{ local_repo }}/50-server.cnf'
       dest: /etc/mysql/mariadb.conf.d/
 
   - name: copying maria-db config file from repo to etc/mysql
     copy:
-      src: /root/ladmex/my.cnf
+      src: '{{ local_repo }}/my.cnf'
       dest: /etc/mysql/
     notify: 
       - restart mariadb-server
@@ -79,7 +81,7 @@
 
   - name: copying wiki db backup folder to mysql_host
     copy:
-      src: /root/ladmex/backup
+      src: '{{ local_repo }}/backup'
       dest: /root/
 
   # - name: find backup db tables
