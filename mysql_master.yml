@@ -122,7 +122,7 @@
 
   - name: copying backup script to mysql_slave
     copy:
-      src: /root/mysql_backup.sh
+      src: '{{ local_repo }}/mysql_backup.sh'
       dest: /root/
 
   - name: Create "daily at night" backup job
