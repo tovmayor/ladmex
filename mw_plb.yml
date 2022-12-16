@@ -20,10 +20,21 @@
   #       - php-mbstring
   #       - mediawiki
 
-  # - name: copying mediawiki config file from repo to /etc/mediawiki
-  #   copy:
-  #     src: /root/ladmex/LocalSettings.php
-  #     dest: /etc/mediawiki/
+  - name: copying mediawiki config file from repo to /etc/mediawiki
+    copy:
+      src: /root/ladmex/LocalSettings.php
+      dest: /etc/mediawiki/
+
+  - name: Add a line to a file if the file does not exist, without passing regexp
+    lineinfile:
+      path: /etc/mediawiki/LocalSettings.php
+      line: 'Something happens'
+
+  - name: Add a line to a file if the file does not exist, without passing regexp
+    lineinfile:
+      path: /root/LocalSettings.php
+      line: 'Something happens'
+      create: yes
 
   - name: modifying LocalSettings.php     
     lineinfile:
@@ -37,12 +48,14 @@
     lineinfile:
       dest: /etc/mediawiki/LocalSettings.php
       regexp: '^$wgDBserver = '
-      line: '$wgDBServer = "{{ db_server_ip }}";'            
-    notify: 
-       - restart apache2
+      line: '$wgDBServer = "{{ db_server_ip }}";'     
 
-  handlers: 
-  - name: restart apache2
-    service: 
-      name: apache2
-      state: restarted
+
+  #   notify: 
+  #      - restart apache2
+
+  # handlers: 
+  # - name: restart apache2
+  #   service: 
+  #     name: apache2
+  #     state: restarted
