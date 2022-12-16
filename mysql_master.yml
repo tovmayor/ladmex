@@ -102,10 +102,19 @@
   - name: Reset master binlog
     command: mysql -u root -e "RESET MASTER"
 
+
 - hosts: mysql_slave
   tasks:
+  - name: Modify configuration file to setup server ID
+    lineinfile: 
+      dest: /etc/mysql/my.cnf 
+      regexp: "^#server-id"
+      line: "server-id=200"
+
   - name: Setup replication
-    command: mysql -uroot -e "CHANGE MASTER TO master_host='192.168.82.39', master_user='root', master_password='MW@2022!', master_use_gtid=current_pos"    
+    command: mysql -uroot -e "CHANGE MASTER TO master_host='mysql_master', master_user='root', master_password='MW@2022!', master_use_gtid=current_pos"    
 
   - name: Restart mysql service
-    service: name=mysql state=restarted
+    service: 
+      name: mariadb
+      state: restarted
