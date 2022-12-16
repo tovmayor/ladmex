@@ -112,7 +112,7 @@
       line: "server-id=200"
 
   - name: Setup replication
-    command: mysql -uroot -e "CHANGE MASTER TO master_host='mysql_master', master_user='root', master_password='MW@2022!', master_use_gtid=current_pos"    
+    command: mysql -uroot -e "CHANGE MASTER TO master_host='{{ hostvars[groups['mysql_master'][0]].node_name }}', master_user='root', master_password='MW@2022!', master_use_gtid=current_pos"    
 
   - name: Restart mysql service
     service: 
