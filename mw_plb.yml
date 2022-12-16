@@ -27,7 +27,7 @@
 
   - name: modifying LocalSettings.php     
     lineinfile:
-      dest: /etc/mediawiki/LocalSettings.php server name
+      dest: /etc/mediawiki/LocalSettings.php
       regexp: '^$wgServer = '    
       line: '$wgServer = "http://{{ nginx_name  }}.i-tango.ru";'            
     notify: 
