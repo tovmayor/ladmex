@@ -7,30 +7,29 @@
 
   - name: install mediawiki & others
     apt: 
-      name: '{{ item }}'
       state: present 
       update_cache: yes
-      with_items:
-        - 'apache2'
-        - 'php'
-        - 'php-mysql'
-        - 'libapache2-mod-php'
-        - 'php-xml'
-        - 'php-mbstring'
-        - 'mediawiki'
+      name:       
+        - apache2
+        - php
+        - php-mysql
+        - libapache2-mod-php
+        - php-xml
+        - php-mbstring
+        - mediawiki
 
   - name: copying mediawiki config file from repo to /etc/mediawiki
     copy:
       src: /root/ladmex/LocalSettings.php
       dest: /etc/mediawiki/
-    notify: 
-       - restart apache2
 
   - name: modifying LocalSettings.php     
     lineinfile:
       dest: /etc/mediawiki/LocalSettings.php
       regexp: '^$wgServer = '
       line: '$wgServer = "http://nginx.i-tango.ru";'      
+    notify: 
+       - restart apache2
 
   handlers: 
   - name: restart apache2
