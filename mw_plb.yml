@@ -39,7 +39,7 @@
   - name: modifying LocalSettings.php     
     lineinfile:
       dest: /etc/mediawiki/LocalSettings.php
-      regexp: '^$wgServer = '    
+      regexp: '^$wgServer'    
       line: '$wgServer = "http://{{ nginx_name }}.i-tango.ru";'            
     # notify: 
     #    - restart apache2
@@ -47,7 +47,7 @@
   - name: modifying LocalSettings.php mysql host    
     lineinfile:
       dest: /etc/mediawiki/LocalSettings.php
-      regexp: '^$wgDBserver = '
+      regexp: '^$wgDBserver'
       line: '$wgDBServer = "{{ db_server_ip }}";'     
 
 
