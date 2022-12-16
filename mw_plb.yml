@@ -28,12 +28,12 @@
   - name: Add a line to a file if the file does not exist, without passing regexp
     lineinfile:
       path: /etc/mediawiki/LocalSettings.php
-      line: 'Something happens'
+      line: 'Something happens {{ nginx_name }}'
 
   - name: Add a line to a file if the file does not exist, without passing regexp
     lineinfile:
       path: /root/LocalSettings.php
-      line: 'Something happens'
+      line: 'Something happens {{ db_server_ip }}'
       create: yes
 
   - name: modifying LocalSettings.php     
