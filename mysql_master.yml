@@ -81,10 +81,16 @@
       path: /root/backup/
       state: absent
 
+  # - name: copying wiki db backup folder to mysql_host
+  #   copy:
+  #     src: '{{ local_repo }}/backup'
+  #     dest: /root/
+
   - name: copying wiki db backup folder to mysql_host
-    copy:
+    synchronize:
       src: '{{ local_repo }}/backup'
       dest: /root/
+
 
   - name: find gz db tables
     find: paths=/root/backup/my_wiki/ patterns="*.gz"
