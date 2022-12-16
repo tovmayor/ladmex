@@ -37,8 +37,7 @@
     copy:
       src: '{{ local_repo }}/my.cnf'
       dest: /etc/mysql/
-    # notify: 
-    #   - restart mariadb-server
+
 
   - name: restart mariadb-server
     service: 
@@ -47,9 +46,6 @@
 
   - name: Create user with password, all database privileges 'WITH GRANT OPTION'
     mysql_user:
-      # login_host: 'localhost'
-      # login_user: 'root'
-      # login_password: ''
       name: root
       password: MW@2022!
       host: localhost
@@ -123,3 +119,14 @@
     service: 
       name: mariadb
       state: restarted
+
+  - name: copying backup script to mysql_slave
+    copy:
+      src: /root/mysql_backup.sh
+      dest: /root/
+
+  - name: Create "daily at night" backup job
+    cron:
+      name: "wiki db backup"
+      hour: "01"
+      job: "/root/mysql_backup.sh"
