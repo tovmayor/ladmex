@@ -26,6 +26,12 @@
     notify: 
        - restart apache2
 
+  - name: modifying LocalSettings.php     
+    lineinfile:
+      dest: /etc/mediawiki/LocalSettings.php
+      regexp: '^$wgServer = '
+      line: '$wgServer = "http://nginx.i-tango.ru";'      
+
   handlers: 
   - name: restart apache2
     service: 
