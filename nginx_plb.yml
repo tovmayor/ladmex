@@ -5,31 +5,46 @@
 
   tasks:
 
-  - name: install nginx
-    apt: 
-      name: nginx 
-      state: present 
+  # - name: install nginx
+  #   apt: 
+  #     name: nginx 
+  #     state: present 
 
-  - name: enable on boot
-    service: 
-      name: nginx 
-      state: started 
-      enabled: yes
+  # - name: enable on boot
+  #   service: 
+  #     name: nginx 
+  #     state: started 
+  #     enabled: yes
  
-  - name: remove default config from sites-enabled
-    file:
-      path: /etc/nginx/sites-enabled/default
-      state: absent
+  # - name: remove default config from sites-enabled
+  #   file:
+  #     path: /etc/nginx/sites-enabled/default
+  #     state: absent
 
-  - name: copying nginx proxy config file from repo to sites-enabled
-    copy:
-      src: /root/ladmex/nginx_upstream.conf
-      dest: /etc/nginx/sites-enabled/
-    notify: 
-       - restart nginx
+  # - name: copying nginx proxy config file from repo to sites-enabled
+  #   copy:
+  #     src: /root/ladmex/nginx_upstream.conf
+  #     dest: /etc/nginx/sites-enabled/
 
-  handlers: 
-  - name: restart nginx
-    service: 
-      name: nginx
-      state: restarted
+  - name: setting mediawiki hosts from inventory to nginx_upstream.conf     
+    lineinfile:
+      dest: /etc/nginx/sites-enabled/nginx_upstream.conf
+      regexp: '^        server '
+      line: "        server '{{ hostvars[groups['mediawiki1'][0]].inventory_hostname }}';"      
+
+
+
+
+
+
+
+
+
+  #   notify: 
+  #      - restart nginx
+
+  # handlers: 
+  # - name: restart nginx
+  #   service: 
+  #     name: nginx
+  #     state: restarted
