@@ -44,11 +44,17 @@
     # notify: 
     #    - restart apache2
 
+  # - name: modifying LocalSettings.php mysql host    
+  #   lineinfile:
+  #     dest: /etc/mediawiki/LocalSettings.php
+  #     regexp: '^$wgDBserver'
+  #     line: '$wgDBServer = "{{ db_server_ip }}";'     
+
   - name: modifying LocalSettings.php mysql host    
     lineinfile:
       dest: /etc/mediawiki/LocalSettings.php
       regexp: '^$wgDBserver'
-      line: '$wgDBServer = "{{ db_server_ip }}";'     
+      line: '$wgDBServer = "192.168.82.39";'   
 
 
   #   notify: 
