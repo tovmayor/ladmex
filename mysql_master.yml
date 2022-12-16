@@ -101,8 +101,6 @@
 
 - hosts: mysql_master  
   tasks:
-  - name: Reset master binlog
-    command: mysql -u root -e "RESET MASTER"
 
   - name: Modify configuration file to listen on all interfaces
     lineinfile: 
@@ -110,10 +108,8 @@
       regexp: "^bind-address"
       line: "bind-address=0.0.0.0"  
 
-  - name: Restart mysql service
-    service: 
-      name: mariadb
-      state: restarted
+  - name: Reset master binlog
+    command: mysql -u root -e "RESET MASTER"
 
 
 - hosts: mysql_slave
@@ -129,18 +125,22 @@
   - name: Setup replication
     command: mysql -uroot -e "CHANGE MASTER TO master_host='{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}', master_user='root', master_password='MW@2022!', master_use_gtid=current_pos"    
 
-  - name: Restart mysql service
-    service: 
-      name: mariadb
-      state: restarted
-
   - name: copying backup script to mysql_slave
     copy:
       src: '{{ local_repo }}/mysql_backup.sh'
       dest: /root/
+      mode: u=rwx,g=rx,o=rx
 
   - name: Create "daily at night" backup job
     cron:
       name: "wiki db backup"
       hour: "01"
       job: "/root/mysql_backup.sh"
+
+
+- hosts: mysql
+  tasks:
+  - name: Restart mysql service
+    service: 
+      name: mariadb
+      state: restarted
