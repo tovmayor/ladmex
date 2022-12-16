@@ -7,7 +7,7 @@
 
   - name: install mediawiki & others
     apt: 
-      name: "{{ item }}"
+      name: '{{ item }}'
       state: present 
       update_cache: yes
       with_items:
