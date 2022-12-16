@@ -76,6 +76,11 @@
       name: my_wiki
       state: present
 
+  - name: remove previously remained backup folder
+    file:
+      path: /root/backup/
+      state: absent      
+
   - name: copying wiki db backup folder to mysql_host
     synchronize:
       src: '{{ local_repo }}/backup'
@@ -89,7 +94,7 @@
     with_items: "{{ find_result.files }}"
   
   - name: restore tables to db
-    shell: for s in `ls /root/backup/my_wiki/`; do mysql --defaults-extra-file=/root/.my.cnf my_wiki < /root/backup/my_wiki/$s; done
+    shell: mysql -e 'STOP SLAVE' && for s in `ls /root/backup/my_wiki/`; do mysql my_wiki < /root/backup/my_wiki/$s; done
 
   - name: remove backup folder
     file:
