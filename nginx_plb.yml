@@ -26,17 +26,17 @@
       src: /root/ladmex/nginx_upstream.conf
       dest: /etc/nginx/sites-enabled/
 
-  # - name: setting mediawiki hosts from inventory to nginx_upstream.conf     
-  #   lineinfile:
-  #     dest: /etc/nginx/sites-enabled/nginx_upstream.conf
-  #     regexp: '^server1'
-  #     line: "        server '{{ hostvars[groups['mediawiki1'][0]].inventory_hostname }}';"      
+  - name: setting mediawiki hosts from inventory to nginx_upstream.conf     
+    lineinfile:
+      dest: /etc/nginx/sites-enabled/nginx_upstream.conf
+      regexp: '^server1'
+      line: "        server '{{ hostvars[groups['mediawiki1'][0]].inventory_hostname }}';"      
 
-  # - name: setting mediawiki hosts from inventory to nginx_upstream.conf     
-  #   lineinfile:
-  #     dest: /etc/nginx/sites-enabled/nginx_upstream.conf
-  #     regexp: '^server2'
-  #     line: "        server '{{ hostvars[groups['mediawiki2'][0]].inventory_hostname }}';"
+  - name: setting mediawiki hosts from inventory to nginx_upstream.conf     
+    lineinfile:
+      dest: /etc/nginx/sites-enabled/nginx_upstream.conf
+      regexp: '^server2'
+      line: "        server '{{ hostvars[groups['mediawiki2'][0]].inventory_hostname }}';"
       
 
 
