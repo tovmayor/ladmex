@@ -96,9 +96,9 @@
       path: /root/backup/
       state: absent
 
-
+      
 - hosts: mysql_master  
   tasks:
   - name: Reset master binlog
-    command: mysql "RESET MASTER"
+    command: mysql -u root -e "RESET MASTER"
 
