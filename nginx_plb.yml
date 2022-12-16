@@ -4,16 +4,6 @@
   become: true
 
   tasks:
-  # - name: install git
-  #   apt:
-  #     name: git
-  #     state: present
-  #     update_cache: yes
-
-  # - name: Clone a repo from github
-  #   git:
-  #     repo: https://github.com/tovmayor/ladmex.git
-  #     dest: /root/ladmex
 
   - name: install nginx
     apt: 

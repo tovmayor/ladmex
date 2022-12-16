@@ -27,7 +27,7 @@
     lineinfile:
       dest: /etc/mediawiki/LocalSettings.php
       regexp: '^$wgServer = '
-      line: '$wgServer = "http://nginx.i-tango.ru";'      
+      line: '$wgServer = "http://nginx-a.i-tango.ru";'      
     notify: 
        - restart apache2
 
