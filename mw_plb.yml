@@ -1,5 +1,5 @@
 ---
-- name: install nginx, copy nginx config
+- name: install mediawiki, copy config and configure
   hosts: mediawikis
   become: true
   vars:
@@ -38,11 +38,14 @@
       dest: /etc/mediawiki/LocalSettings.php
       regexp: '^\$wgDBserver'
       line: '$wgDBServer = "{{ db_server_ip }}";'     
-    notify: 
-       - restart apache2
+  #   notify: 
+  #      - restart apache2
 
-  handlers: 
-  - name: restart apache2
-    service: 
-      name: apache2
-      state: restarted
+  - name: Run update.php script after restore mediawiki
+    shell: php /var/lib/mediawiki/maintenance/update.php --quick
+
+  # handlers: 
+  # - name: restart apache2
+  #   service: 
+  #     name: apache2
+  #     state: restarted
