@@ -7,61 +7,42 @@
     db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
   tasks:
 
-  # - name: install mediawiki & others
-  #   apt: 
-  #     state: present 
-  #     update_cache: yes
-  #     name:       
-  #       - apache2
-  #       - php
-  #       - php-mysql
-  #       - libapache2-mod-php
-  #       - php-xml
-  #       - php-mbstring
-  #       - mediawiki
+  - name: install mediawiki & others
+    apt: 
+      state: present 
+      update_cache: yes
+      name:       
+        - apache2
+        - php
+        - php-mysql
+        - libapache2-mod-php
+        - php-xml
+        - php-mbstring
+        - mediawiki
 
   - name: copying mediawiki config file from repo to /etc/mediawiki
     copy:
       src: /root/ladmex/LocalSettings.php
       dest: /etc/mediawiki/
 
-  # - name: Add a line to a file if the file does not exist, without passing regexp
-  #   lineinfile:
-  #     path: /etc/mediawiki/LocalSettings.php
-  #     line: 'Something happens {{ nginx_name }}'
-
-  # - name: Add a line to a file if the file does not exist, without passing regexp
-  #   lineinfile:
-  #     path: /root/LocalSettings.php
-  #     line: 'Something happens {{ db_server_ip }}'
-  #     create: yes
-
   - name: modifying LocalSettings.php     
     lineinfile:
       dest: /etc/mediawiki/LocalSettings.php
       regexp: '^\$wgServer'    
       line: '$wgServer = "http://{{ nginx_name }}.i-tango.ru";'            
-    # notify: 
-    #    - restart apache2
-
-  # - name: modifying LocalSettings.php mysql host    
-  #   lineinfile:
-  #     dest: /etc/mediawiki/LocalSettings.php
-  #     regexp: '^$wgDBserver'
-  #     line: '$wgDBServer = "{{ db_server_ip }}";'     
+    notify: 
+       - restart apache2
 
   - name: modifying LocalSettings.php mysql host    
     lineinfile:
       dest: /etc/mediawiki/LocalSettings.php
-      regexp: '^$wgDBserver'
-      line: '$wgDBServer = "192.168.82.39";'   
+      regexp: '^\$wgDBserver'
+      line: '$wgDBServer = "{{ db_server_ip }}";'     
+    notify: 
+       - restart apache2
 
-
-  #   notify: 
-  #      - restart apache2
-
-  # handlers: 
-  # - name: restart apache2
-  #   service: 
-  #     name: apache2
-  #     state: restarted
+  handlers: 
+  - name: restart apache2
+    service: 
+      name: apache2
+      state: restarted
