@@ -5,10 +5,10 @@
 
   tasks:
 
-  # - name: install nginx
-  #   apt: 
-  #     name: nginx 
-  #     state: present 
+  - name: install nginx
+    apt: 
+      name: nginx 
+      state: present 
 
   # - name: enable on boot
   #   service: 
@@ -30,27 +30,19 @@
     lineinfile:
       dest: /etc/nginx/sites-enabled/nginx_upstream.conf
       regexp: '^server1'
-      line: "        server '{{ hostvars[groups['mediawiki1'][0]].inventory_hostname }}';"      
+      line: "        server {{ hostvars[groups['mediawiki1'][0]].inventory_hostname }};"      
+    notify: 
+       - restart nginx
 
   - name: setting mediawiki hosts from inventory to nginx_upstream.conf     
     lineinfile:
       dest: /etc/nginx/sites-enabled/nginx_upstream.conf
       regexp: '^server2'
-      line: "        server '{{ hostvars[groups['mediawiki2'][0]].inventory_hostname }}';"
+      line: "        server {{ hostvars[groups['mediawiki2'][0]].inventory_hostname }};"
       
 
-
-
-
-
-
-
-
-  #   notify: 
-  #      - restart nginx
-
-  # handlers: 
-  # - name: restart nginx
-  #   service: 
-  #     name: nginx
-  #     state: restarted
+  handlers: 
+  - name: restart nginx
+    service: 
+      name: nginx
+      state: restarted
