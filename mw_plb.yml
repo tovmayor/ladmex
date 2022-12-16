@@ -30,8 +30,6 @@
       dest: /etc/mediawiki/LocalSettings.php
       regexp: '^\$wgServer'    
       line: '$wgServer = "http://{{ nginx_name }}.i-tango.ru";'            
-    notify: 
-       - restart apache2
 
   - name: modifying LocalSettings.php mysql host    
     lineinfile:
