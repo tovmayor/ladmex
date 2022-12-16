@@ -31,7 +31,7 @@ $wgSitename = "LinuxAdmin";
 $wgScriptPath = "/mediawiki";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://nginx1.i-tango.ru";
+$wgServer = "http://some_server";
 
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;
@@ -54,7 +54,7 @@ $wgEmailAuthentication = true;
 
 ## Database settings
 $wgDBtype = "mysql";
-$wgDBserver = "192.168.82.39";
+$wgDBserver = "some_ip";
 $wgDBname = "my_wiki";
 $wgDBuser = "root";
 $wgDBpassword = "MW@2022!";

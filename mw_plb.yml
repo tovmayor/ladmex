@@ -4,6 +4,7 @@
   become: true
   vars:
     nginx_name: "{{ hostvars[groups['nginx'][0]].ansible_hostname }}"
+    db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
   tasks:
 
   - name: install mediawiki & others
@@ -26,10 +27,17 @@
 
   - name: modifying LocalSettings.php     
     lineinfile:
-      dest: /etc/mediawiki/LocalSettings.php
-      regexp: '^$wgServer = '
-      #line: '$wgServer = "http://nginx-a.i-tango.ru";'      
+      dest: /etc/mediawiki/LocalSettings.php server name
+      regexp: '^$wgServer = '    
       line: '$wgServer = "http://{{ nginx_name  }}.i-tango.ru";'            
+    notify: 
+       - restart apache2
+
+  - name: modifying LocalSettings.php mysql host    
+    lineinfile:
+      dest: /etc/mediawiki/LocalSettings.php
+      regexp: '^$wgDBserver = '
+      line: '$wgDBServer = "{{ db_server_ip  }}";'            
     notify: 
        - restart apache2
 
