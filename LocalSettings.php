@@ -31,7 +31,7 @@ $wgSitename = "LinuxAdmin";
 $wgScriptPath = "/mediawiki";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://nginx.i-tango.ru";
+$wgServer = "http://nginx1.i-tango.ru";
 
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;

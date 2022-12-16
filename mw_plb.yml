@@ -2,7 +2,8 @@
 - name: install nginx, copy nginx config
   hosts: mediawikis
   become: true
-
+  vars:
+    nginx_name: "{{ hostvars[groups['nginx'][0]].ansible_hostname }}"
   tasks:
 
   - name: install mediawiki & others
@@ -27,7 +28,8 @@
     lineinfile:
       dest: /etc/mediawiki/LocalSettings.php
       regexp: '^$wgServer = '
-      line: '$wgServer = "http://nginx-a.i-tango.ru";'      
+      #line: '$wgServer = "http://nginx-a.i-tango.ru";'      
+      line: '$wgServer = "http://{{ nginx_name  }}.i-tango.ru";'            
     notify: 
        - restart apache2
 

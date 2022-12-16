@@ -4,7 +4,6 @@
   become: true
   vars:
     local_repo: '/root/ladmex'
-    remote_work_folder: 
 
   tasks:
 
