@@ -21,6 +21,7 @@ provider "proxmox" {
   pm_api_token_secret = "dfb7917c-3f39-49c5-8428-6cf0d715fb38"
   # leave tls_insecure set to true unless you have your proxmox SSL certificate situation fully sorted out (if you do, you will know)
   pm_tls_insecure = true
+  pm_debug = true
 }
 # resource is formatted to be "[type]" "[entity_name]" so in this case
 # we are looking to create a proxmox_vm_qemu entity named test_server
