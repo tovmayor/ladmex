@@ -55,11 +55,19 @@ resource "proxmox_vm_qemu" "test_server" {
   
   ssh_user = "root"
   # sshkeys set using variables. the variable contains the text of the key.
-  ssh_private_key = file(pathexpand("~/.ssh/id_rsa"))
+  ssh_private_key = file("~/.ssh/id_rsa")
 
   sshkeys = <<EOF
   ${var.ssh_key}
   EOF
+
+  connection {
+    type        = "ssh"
+    host        = self.ssh_host
+    user        = self.ssh_user
+    private_key = self.ssh_private_key
+    port        = self.ssh_port
+  }
 
   provisioner "remote-exec" { #wait for startup
     inline = [
