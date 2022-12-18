@@ -79,7 +79,7 @@ resource "proxmox_vm_qemu" "test_server" {
       type = "ssh"
       user = "root"
       private_key = file("/root/.ssh/id_rsa")
-      host = test_server.network_interface[0].ip_address
+      host = test_server
     }
   } 
 
