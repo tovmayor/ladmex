@@ -46,7 +46,7 @@ resource "proxmox_vm_qemu" "test_server" {
     # set disk size here. leave it small for testing because expanding the disk takes time.
     size = "10G"
     type = "scsi"
-    storage = "local-zfs"
+    storage = "SSD"
     iothread = 1
   }
   
