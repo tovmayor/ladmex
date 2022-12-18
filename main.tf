@@ -53,6 +53,7 @@ resource "proxmox_vm_qemu" "test_server" {
   
   ipconfig0 = "ip=192.168.82.5${count.index + 1}/24,gw=192.168.82.1"
   
+  ssh_forward_ip = "192.168.82.5${count.index + 1}"
   ssh_user = "root"
   # sshkeys set using variables. the variable contains the text of the key.
   ssh_private_key = file("~/.ssh/id_rsa")
