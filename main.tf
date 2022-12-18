@@ -23,8 +23,11 @@ resource "proxmox_vm_qemu" "test_server" {
   count = 1
   name = "t-vm" 
   target_node = var.proxmox_host
+
   clone = var.template_name
   os_type = "cloud-init"
+  agent = 1
+
   cores = 2
   sockets = 1
   cpu = "host"
@@ -64,7 +67,7 @@ resource "proxmox_vm_qemu" "test_server" {
 
   connection {
     type        = "ssh"
-    host        = self.default_ipv4_address
+    host        = self.ssh_host
     user        = self.ssh_user
     private_key = self.ssh_private_key
     port        = self.ssh_port
