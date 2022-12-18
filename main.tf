@@ -70,7 +70,6 @@ resource "proxmox_vm_qemu" "test_server" {
   sshkeys = <<EOF
   ${var.ssh_key}
   EOF
-}
 
   provisioner "remote-exec" { #wait for startup
     inline = [
@@ -83,6 +82,8 @@ resource "proxmox_vm_qemu" "test_server" {
       host = self.network_interface[0].ip_address
     }
   } 
+
+}
 # output "t-vm_ip" {
 #   value = proxmox_vm_qemu.test_server.network_interface[0].ip_address
 # }
