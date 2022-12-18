@@ -15,9 +15,9 @@ provider "proxmox" {
   # url is the hostname (FQDN if you have one) for the proxmox host you'd like to connect to to issue the commands. my proxmox host is 'prox-1u'. Add /api2/json at the end for the API
   pm_api_url = "https://192.168.80.10:8006/api2/json"
   # api token id is in the form of: <username>@pam!<tokenId>
-  pm_api_token_id = "admin@pam!terraform"
+  pm_api_token_id = "root@pam!terraform"
   # this is the full secret wrapped in quotes. don't worry, I've already deleted this from my proxmox cluster by the time you read this post
-  pm_api_token_secret = "f726082f-8b19-41bc-8e9f-660a7a035b37"
+  pm_api_token_secret = "dfb7917c-3f39-49c5-8428-6cf0d715fb38"
   # leave tls_insecure set to true unless you have your proxmox SSL certificate situation fully sorted out (if you do, you will know)
   pm_tls_insecure = true
 }
