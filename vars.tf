@@ -5,5 +5,5 @@ variable "proxmox_host" {
     default = "vmpool01"
 }
 variable "template_name" {
-    default = "Ubuntu20SrvCloud"
+    default = "ubuntu-2004-cloud-templ"
 }
