@@ -64,7 +64,7 @@ resource "proxmox_vm_qemu" "test_server" {
 
   connection {
     type        = "ssh"
-    host        = self.ssh_host
+    host        = self.default_ipv4_address
     user        = self.ssh_user
     private_key = self.ssh_private_key
     port        = self.ssh_port
