@@ -75,12 +75,12 @@ resource "proxmox_vm_qemu" "test_server" {
     inline = [
       "echo 'Ready to connect!'"
     ]
-    connection {
-      type = "ssh"
-      user = "root"
-      private_key = file("/root/.ssh/id_rsa")
-      host = test_server.ip_address
-    }
+    # connection {
+    #   type = "ssh"
+    #   user = "root"
+    #   private_key = file("/root/.ssh/id_rsa")
+    #   host = test_server.ip_address
+    # }
   } 
 
 }
