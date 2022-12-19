@@ -77,7 +77,7 @@ resource "proxmox_vm_qemu" "test_server" {
     ]
   } 
 }
-output "t-vm_ip" {
+output "tvm_ip" {
   value = proxmox_vm_qemu.test_server[0].default_ipv4_address
 }
 
