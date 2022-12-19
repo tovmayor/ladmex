@@ -5,22 +5,40 @@ variable "vm_name" {
 variable "virtual_machines" {
     default = {
         "vm-01" = {
-            hostname = "nginx"
+            hostname = "www"
+            memory = "1024",
             hdd_size = "7G",
             ip_address = "192.168.82.51/24"
-            gateway = "192.168.82.1",
         },
         "vm-02" = {
             hostname = "mediawiki1"
+            memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.52/24"
-            gateway = "192.168.82.1",
         },
         "vm-03" = {
             hostname = "mediawiki2"
+            memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.53/24"
-            gateway = "192.168.82.1",
+        },
+        "vm-04" = {
+            hostname = "mysql_master"
+            memory = "2048",
+            hdd_size = "10G",
+            ip_address = "192.168.82.54/24"               
+        },  
+        "vm-05" = {
+            hostname = "mysql_slave"
+            memory = "2048",
+            hdd_size = "10G",
+            ip_address = "192.168.82.55/24"          
+        },          
+        "vm-06" = {
+            hostname = "observer"
+            memory = "2048",
+            hdd_size = "15G",
+            ip_address = "192.168.82.56/24"   
         },        
     }
 }
