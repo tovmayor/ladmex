@@ -78,5 +78,12 @@ resource "proxmox_vm_qemu" "test_server" {
   } 
 }
 output "t-vm_ip" {
-  value = proxmox_vm_qemu.test_server.[count.index].ip_address
+  value = instance.default_ipv4_address
 }
+
+# output "vm_ipv4_addresses" {
+#   value = {
+#       for instance in proxmox_vm_qemu.virtual_machines:
+#       instance.name => instance.default_ipv4_address
+#   }
+# }  
