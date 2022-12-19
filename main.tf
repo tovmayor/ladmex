@@ -91,7 +91,7 @@ resource "proxmox_vm_qemu" "LinuxAdmin" {
 # }
 
 output "www_ip" {
-  value = proxmox_vm_qemu.LinuxAdmin[vm-01].default_ipv4_address
+  value = proxmox_vm_qemu.LinuxAdmin["vm-01"].default_ipv4_address
 }
 output "tvm_ipa" {
   value = {
