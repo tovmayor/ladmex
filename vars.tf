@@ -23,13 +23,13 @@ variable "virtual_machines" {
             ip_address = "192.168.82.53/24"
         },
         "vm-04" = {
-            hostname = "mysql_master"
+            hostname = "mysqlmaster"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.54/24"               
         },  
         "vm-05" = {
-            hostname = "mysql_slave"
+            hostname = "mysqlslave"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.55/24"          
