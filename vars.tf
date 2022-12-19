@@ -1,6 +1,6 @@
-variable "vm_name" {
-  default = "t-vm"
-}
+# variable "vm_name" {
+#   default = "t-vm"
+# }
 
 variable "virtual_machines" {
     default = {
