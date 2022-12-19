@@ -19,9 +19,11 @@ provider "proxmox" {
   pm_debug = true
 }
 
-resource "proxmox_vm_qemu" "test_server" {
-  count = 1
-  name = var.vm_name 
+resource "proxmox_vm_qemu" "LinuxAdmin" {
+#  count = 2
+  for_each = var.virtual_machines
+  name = each.value.hostname
+#  name = var.vm_name.${count.index + 1} 
   target_node = var.proxmox_host
 
   clone = var.template_name
@@ -37,7 +39,7 @@ resource "proxmox_vm_qemu" "test_server" {
 
   disk {
     slot = 0
-    size = "10G"
+    size = each.value.hdd_size
     type = "scsi"
     storage = "SSD"
     iothread = 1
@@ -54,9 +56,8 @@ resource "proxmox_vm_qemu" "test_server" {
     ]
   }
   
-  ipconfig0 = "ip=192.168.82.5${count.index + 1}/24,gw=192.168.82.1"
-  
-  #ssh_forward_ip = "192.168.82.5${count.index + 1}"
+  #ipconfig0 = "ip=192.168.82.5${count.index + 1}/24,gw=192.168.82.1"
+  ipcongig0 = "ip=${each.value.ip_address},gw=${each.value.gateway}"
   ssh_user = "root"
   ssh_private_key = file("~/.ssh/id_rsa")
   sshkeys = <<EOF
@@ -71,14 +72,20 @@ resource "proxmox_vm_qemu" "test_server" {
     port        = self.ssh_port
   }
 
-  provisioner "remote-exec" { #wait for startup
+  provisioner "remote-exec" { #waiting for startup
     inline = [
       "echo 'Ready to connect!'"
     ]
   } 
 }
-output "tvm_ip" {
-  value = proxmox_vm_qemu.test_server[0].default_ipv4_address
+# output "tvm_ip" {
+#   value = proxmox_vm_qemu.LinuxAdmin[0].default_ipv4_address
+# }
+output "tvm_ipa" {
+  value = {
+    for instance in proxmox_vm_qemu.LinuxAdmin:
+    instance.name => instance.default_ipv4_address
+  }
 }
 
 # output "vm_ipv4_addresses" {
