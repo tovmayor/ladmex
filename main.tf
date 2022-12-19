@@ -2,11 +2,11 @@ terraform {
   required_providers {
     proxmox = {
       source = "telmate/proxmox"
-      version = "2.9.11"
+      version = "~> 2.9"
     }
     local = {
       source = "hashicorp/local"
-      version = "2.2.3"
+      version = "~> 2.2"
     }
   }
 }
