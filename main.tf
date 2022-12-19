@@ -57,7 +57,7 @@ resource "proxmox_vm_qemu" "LinuxAdmin" {
   }
   
   #ipconfig0 = "ip=192.168.82.5${count.index + 1}/24,gw=192.168.82.1"
-  ipcongig0 = "ip=${each.value.ip_address},gw=${each.value.gateway}"
+  ipconfig0 = "ip=${each.value.ip_address},gw=${each.value.gateway}"
   ssh_user = "root"
   ssh_private_key = file("~/.ssh/id_rsa")
   sshkeys = <<EOF
