@@ -130,7 +130,7 @@
       dest: /root/
       mode: u=rwx,g=rx,o=rx
 
-  - name: Create "daily at night" backup job
+  - name: Create "wiki db backup" job
     cron:
       name: "wiki db backup"
       hour: "01"

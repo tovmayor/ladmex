@@ -21,7 +21,7 @@ provider "proxmox" {
 
 resource "proxmox_vm_qemu" "test_server" {
   count = 1
-  name = "t-vm" 
+  name = var.vm_name 
   target_node = var.proxmox_host
 
   clone = var.template_name
@@ -56,11 +56,9 @@ resource "proxmox_vm_qemu" "test_server" {
   
   ipconfig0 = "ip=192.168.82.5${count.index + 1}/24,gw=192.168.82.1"
   
-  ssh_forward_ip = "192.168.82.5${count.index + 1}"
+  #ssh_forward_ip = "192.168.82.5${count.index + 1}"
   ssh_user = "root"
-  # sshkeys set using variables. the variable contains the text of the key.
   ssh_private_key = file("~/.ssh/id_rsa")
-
   sshkeys = <<EOF
   ${var.ssh_key}
   EOF
@@ -77,15 +75,8 @@ resource "proxmox_vm_qemu" "test_server" {
     inline = [
       "echo 'Ready to connect!'"
     ]
-    # connection {
-    #   type = "ssh"
-    #   user = "root"
-    #   private_key = file("/root/.ssh/id_rsa")
-    #   host = test_server.ip_address
-    # }
   } 
-
 }
-# output "t-vm_ip" {
-#   value = proxmox_vm_qemu.test_server.network_interface[0].ip_address
-# }
+output "t-vm_ip" {
+  value = proxmox_vm_qemu.test_server.default_ipv4_address
+}
