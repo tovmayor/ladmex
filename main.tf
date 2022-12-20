@@ -16,7 +16,7 @@ provider "proxmox" {
   pm_api_token_id = "root@pam!terraform"  
   pm_api_token_secret = "dfb7917c-3f39-49c5-8428-6cf0d715fb38"
   pm_tls_insecure = true
-  pm_debug = true
+#  pm_debug = true
 }
 
 resource "proxmox_vm_qemu" "LinuxAdmin" {
