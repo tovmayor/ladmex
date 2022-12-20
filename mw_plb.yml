@@ -36,14 +36,15 @@
       dest: /etc/mediawiki/LocalSettings.php
       regexp: '^\$wgDBserver'
       line: '$wgDBServer = "{{ db_server_ip }}";'     
-  #   notify: 
-  #      - restart apache2
+    notify: 
+       - restart apache2
 
   - name: Run update.php script after restore mediawiki
     shell: php /var/lib/mediawiki/maintenance/update.php --quick
+    ignore_errors: true
 
-  # handlers: 
-  # - name: restart apache2
-  #   service: 
-  #     name: apache2
-  #     state: restarted
+  handlers: 
+  - name: restart apache2
+    service: 
+      name: apache2
+      state: restarted
