@@ -1,42 +1,44 @@
-# variable "vm_name" {
-#   default = "t-vm"
-# }
-
 variable "virtual_machines" {
     default = {
-        "vm-01" = {
+        "www" = {
+            vmid = "151"
             hostname = "www"
             memory = "1024",
             hdd_size = "7G",
             ip_address = "192.168.82.51/24"
         },
-        "vm-02" = {
+        "mediawiki1" = {
+            vmid = "152"
             hostname = "mediawiki1"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.52/24"
         },
-        "vm-03" = {
+        "mediawiki2" = {
+            vmid = "153"
             hostname = "mediawiki2"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.53/24"
         },
-        "vm-04" = {
+        "mysqlmaster" = {
+            vmid = "154"
             hostname = "mysqlmaster"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.54/24"               
         },  
-        "vm-05" = {
+        "mysqlslave" = {
+            vmid = "155"
             hostname = "mysqlslave"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.55/24"          
         },          
-        "vm-06" = {
+        "observer" = {
+            vmid = "156"
             hostname = "observer"
-            memory = "2048",
+            memory = "4096",
             hdd_size = "15G",
             ip_address = "192.168.82.56/24"   
         },        
