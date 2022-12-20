@@ -42,6 +42,7 @@
   - name: Run update.php script after restore mediawiki
     shell: php /var/lib/mediawiki/maintenance/update.php --quick
     ignore_errors: true
+    no_log: true
 
   handlers: 
   - name: restart apache2
