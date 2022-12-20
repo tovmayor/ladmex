@@ -96,14 +96,14 @@ $wgShellLocale = "C.UTF-8";
 # Site language code, should be one of the list in ./languages/data/Names.php
 $wgLanguageCode = "ru";
 
-$wgSecretKey = "ee2fda3a80973471ea22262a706184cd21fa4ac0fcc4d01c25c897dcc691572d";
+$wgSecretKey = "e12dcb70c2fb8bbb1051a0050c3bb61d7603ac0655e2c762807bb103dfdba67a";
 
 # Changing this will log out all existing sessions.
 $wgAuthenticationTokenVersion = "1";
 
 # Site upgrade key. Must be set to a string (default provided) to turn on the
 # web installer while LocalSettings.php is in place
-$wgUpgradeKey = "3f676c74293a033e";
+$wgUpgradeKey = "4af5144179989db9";
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation
@@ -125,16 +125,4 @@ $wgDefaultSkin = "vector";
 wfLoadSkin( 'MonoBook' );
 wfLoadSkin( 'Timeless' );
 wfLoadSkin( 'Vector' );
-
-
-# Enabled extensions. Most of the extensions are enabled by adding
-# wfLoadExtensions('ExtensionName');
-# to LocalSettings.php. Check specific extension documentation for more details.
-# The following extensions were automatically enabled:
-wfLoadExtension( 'Renameuser' );
-wfLoadExtension( 'SpamBlacklist' );
-
-
-# End of automatically generated settings.
-# Add more configuration options below.
 

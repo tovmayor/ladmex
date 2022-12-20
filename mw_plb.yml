@@ -20,24 +20,24 @@
         - php-mbstring
         - mediawiki
 
-  # - name: copying mediawiki config file from repo to /etc/mediawiki
-  #   copy:
-  #     src: /root/ladmex/LocalSettings.php
-  #     dest: /etc/mediawiki/
+  - name: copying mediawiki config file from repo to /etc/mediawiki
+    copy:
+      src: /root/ladmex/LocalSettings.php
+      dest: /etc/mediawiki/
 
-  # - name: modifying LocalSettings.php     
-  #   lineinfile:
-  #     dest: /etc/mediawiki/LocalSettings.php
-  #     regexp: '^\$wgServer'    
-  #     line: '$wgServer = "http://{{ nginx_name }}.i-tango.ru";'            
+  - name: modifying LocalSettings.php     
+    lineinfile:
+      dest: /etc/mediawiki/LocalSettings.php
+      regexp: '^\$wgServer'    
+      line: '$wgServer = "http://{{ nginx_name }}.i-tango.ru";'            
 
-  # - name: modifying LocalSettings.php mysql host    
-  #   lineinfile:
-  #     dest: /etc/mediawiki/LocalSettings.php
-  #     regexp: '^\$wgDBserver'
-  #     line: '$wgDBServer = "{{ db_server_ip }}";'     
-  #   notify: 
-  #      - restart apache2
+  - name: modifying LocalSettings.php mysql host    
+    lineinfile:
+      dest: /etc/mediawiki/LocalSettings.php
+      regexp: '^\$wgDBserver'
+      line: '$wgDBServer = "{{ db_server_ip }}";'     
+    notify: 
+       - restart apache2
 
   # - name: Run update.php script after restore mediawiki
   #   shell: php /var/lib/mediawiki/maintenance/update.php --quick
