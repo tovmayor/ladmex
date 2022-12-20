@@ -97,8 +97,8 @@ resource "local_file" "tf_ansible_inventory" {
     ${proxmox_vm_qemu.LinuxAdmin["mediawiki2"].default_ipv4_address}
 
     [mysql:children]
-    mysqlmaster
-    mysqlslave
+    mysql_master
+    mysql_slave
 
     [mysql_master]
     ${proxmox_vm_qemu.LinuxAdmin["mysqlmaster"].default_ipv4_address}

@@ -3,7 +3,7 @@
   hosts: mediawikis
   become: true
   vars:
-    nginx_name: "{{ hostvars[groups['nginx'][0]].ansible_hostname }}"
+    nginx_name: "{{ hostvars[groups['www'][0]].ansible_hostname }}"
     db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
   tasks:
 
