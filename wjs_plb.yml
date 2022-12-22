@@ -1,0 +1,82 @@
+---
+- name: install mediawiki, copy config and configure
+  hosts: mediawiki2
+  become: true
+  vars:
+    nginx_name: "{{ hostvars[groups['www'][0]].ansible_hostname }}"
+    db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
+    nodejs_url: "https://deb.nodesource.com/node_16.x"
+    wikijs_gz_url: "https://github.com/Requarks/wiki/releases/latest/download/wiki-js.tar.gz"
+  tasks:
+
+  # - name: install node.js & others
+  #   apt: 
+  #     state: present 
+  #     update_cache: yes
+  #     name:       
+  #       - nodejs
+  #       - mariadb-client
+  
+  # - name: download and unpack node.js
+  #   unarchive:
+  #     src: "{{ wikijs_gz_url }}"
+  #     dest: /var/www/wikijs
+  #     remote_src: yes
+  #     extra_opts: [--strip-components=1]
+
+  - name: "Add nodejs apt key"
+    apt_key:
+      url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+      state: present
+
+  - name: "Add nodejs 13.x ppa for apt repo"
+    apt_repository:
+      repo: deb "{{ nodejs_url }}" focal main
+      update_cache: yes
+
+  - name: "Install nodejs"
+    apt:
+      update_cache: yes
+      name: nodejs
+      state: present
+
+  - name: create dir wiki.js
+    file:
+      path: /var/www/wikijs
+      state: directory
+  
+  - name: download and unpack wiki.js
+    unarchive:
+      src: "{{ wikijs_gz_url }}"
+      dest: /var/www/wikijs
+      remote_src: yes
+      extra_opts: [--strip-components=1]
+
+  # - name: copying wiki.js config file from repo to /var/www/wikijs
+  #   copy:
+  #     src: /root/ladmex/config.yml
+  #     dest: /var/www/wikijs/
+
+  # - name: modifying config.yml     
+  #   lineinfile:
+  #     dest: /var/www/html/mediawiki/LocalSettings.php
+  #     regexp: '^\$wgServer'    
+  #     line: '$wgServer = "http://{{ nginx_name }}.i-tango.ru";'            
+
+  # - name: modifying LocalSettings.php mysql host    
+  #   lineinfile:
+  #     dest: /var/www/html/mediawiki/LocalSettings.php
+  #     regexp: '^\$wgDBserver'
+  #     line: '$wgDBServer = "{{ db_server_ip }}";'     
+  #   notify: 
+  #      - restart apache2
+
+  # # - name: Run update.php script after restore mediawiki
+  # #   shell: php /var/lib/mediawiki/maintenance/update.php --quick
+  # #   ignore_errors: true
+
+  # handlers: 
+  # - name: restart apache2
+  #   service: 
+  #     name: apache2
+  #     state: restarted
