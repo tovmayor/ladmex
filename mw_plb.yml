@@ -28,6 +28,11 @@
         - imagemagick
         - unzip
 
+  - name: create dir mediawiki
+    file:
+      path: /var/www/html/mediawiki/
+      state: present
+  
   - name: download and unpack mediawiki
     unarchive:
       src: "{{ mediawiki_gz_url }}"
