@@ -42,7 +42,7 @@
 
   - name: modifying config.yml mysql host    
     lineinfile:
-      dest: /var/www/html/mediawiki/LocalSettings.php
+      dest: /root/ladmex/config.yml
       regexp: '^host: mysql_host'
       line: 'host: "{{ db_server_ip }}"'     
     # notify: 
