@@ -42,7 +42,7 @@
 
   - name: modifying config.yml mysql host    
     lineinfile:
-      dest: /root/ladmex/config.yml
+      dest: /var/www/wikijs/config.yml
       regexp: '^host: mysql_host'
       line: 'host: "{{ db_server_ip }}"'     
     # notify: 
