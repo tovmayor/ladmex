@@ -43,8 +43,8 @@
   - name: modifying config.yml mysql host    
     lineinfile:
       dest: /var/www/wikijs/config.yml
-      regexp: '^host: mysql_host'
-      line: 'host: "{{ db_server_ip }}"'     
+      regexp: '^host:'
+      line: 'host: {{ db_server_ip }}'     
     # notify: 
     #    - restart apache2
 
