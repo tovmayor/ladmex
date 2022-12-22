@@ -30,8 +30,8 @@
 
   - name: create dir mediawiki
     file:
-      path: /var/www/html/mediawiki/
-      state: present
+      path: /var/www/html/mediawiki
+      state: directory
   
   - name: download and unpack mediawiki
     unarchive:
