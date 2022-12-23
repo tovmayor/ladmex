@@ -1,10 +1,10 @@
 ---
-- name: install mediawiki, copy config and configure
+- name: install node_exporter
   hosts: www
   become: true
   vars:
     repo_path: "/root/ladmex"  
-    node_exporter_user: promuser
+    node_exporter_user: nodeexport
     db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
     nodeexp_gz_url: "https://github.com/prometheus/node_exporter/releases/download/v1.5.0/node_exporter-1.5.0.linux-amd64.tar.gz"
   
@@ -16,11 +16,6 @@
       shell: /usr/sbin/nologin
       system: true
       create_home: false
-
-  - name: create dir node_exporter
-    file:
-      path: /root/node_exporter
-      state: directory
 
   - name: download and unzip node exporter if not exist
     unarchive:

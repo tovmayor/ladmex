@@ -1,0 +1,77 @@
+---
+- name: install prometheus, copy config and configure
+  hosts: observer
+  become: true
+  vars:
+    repo_path: "/root/ladmex"  
+    prometh_user: promuser
+    db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
+    prometh_gz_url: "https://github.com/prometheus/prometheus/releases/download/v2.37.5/prometheus-2.37.5.linux-amd64.tar.gz"
+  
+  tasks:
+  - name: create prometheus user
+    user:
+      name: "{{ prometheus_user }}"
+      append: true
+      shell: /usr/sbin/nologin
+      system: true
+      create_home: false
+
+  - name: create prometheus directory's
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: "{{ prometheus_user }}"
+      group: "{{ prometheus_user }}"
+      mode: 0755
+    with_items:
+      - /root/prometheus
+      - /etc/prometheus
+      - /var/lib/prometheus
+
+  - name: download and unzip prometheus if not exist
+    unarchive:
+      src: "{{ prometh_gz_url }}"
+      dest: /root/prometheus
+      remote_src: yes
+      extra_opts: [--strip-components=1]
+      
+  - name: copying prometheus exec file to /usr/bin
+    copy:
+      src: /root/prometheus/prometheus
+      dest: /usr/local/bin
+      remote_src: yes
+
+  - name: remove prometheus exec file
+    file:
+      path: /root/prometheus/prometheus
+      state: absent
+
+  - name: copying prometheus conf++ files to /etc/prometheus
+    copy:
+      src: /root/prometheus/
+      dest: /etc/prometheus/
+      remote_src: yes          
+
+  - name: config file
+    template:
+      src: prometheus.yml.j2
+      dest: /etc/prometheus/prometheus.yml
+    
+  - name: copy systemd file for prometheus
+    copy:
+      src: "{{ repo_path }}/prometheus.service"
+      dest: /etc/systemd/system/prometheus.service
+      mode: 644
+    register: service_conf
+
+  - name: Reload systemd daemon
+    systemd:
+      daemon_reload: yes
+    when: service_conf.changed
+
+  - name: service always started
+    systemd:
+      name: prometheus
+      state: started
+      enabled: yes    
