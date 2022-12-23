@@ -1,0 +1,56 @@
+---
+- name: install mediawiki, copy config and configure
+  hosts: www
+  become: true
+  vars:
+    repo_path: "/root/ladmex"  
+    node_exporter_user: promuser
+    db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
+    nodeexp_gz_url: "https://github.com/prometheus/node_exporter/releases/download/v1.5.0/node_exporter-1.5.0.linux-amd64.tar.gz"
+  
+  tasks:
+  - name: create node exporter user
+    user:
+      name: "{{ node_exporter_user }}"
+      append: true
+      shell: /usr/sbin/nologin
+      system: true
+      create_home: false
+
+  - name: create dir node_exporter
+    file:
+      path: /root/node_exporter
+      state: directory
+
+  - name: download and unzip node exporter if not exist
+    unarchive:
+      src: "{{ nodeexp_gz_url }}"
+      dest: /usr/local/bin
+      remote_src: yes
+      extra_opts: [--strip-components=1]
+
+  - name: setting rights
+    file:
+      path: /usr/local/bin/node_exporter
+      owner: "{{ node_exporter_user }}"
+      group: "{{ node_exporter_user }}"
+      mode: 0755
+      remote_src: yes
+
+  - name: copy systemd file for node_exporter
+    copy:
+      src: "{{ repo_path }}/node_exporter.service"
+      dest: /etc/systemd/system/node_exporter.service
+      mode: 644
+    register: service_conf
+
+  - name: Reload systemd daemon
+    systemd:
+      daemon_reload: yes
+    when: service_conf.changed
+
+  - name: service always started
+    systemd:
+      name: node_exporter
+      state: started
+      enabled: yes    
