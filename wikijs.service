@@ -7,7 +7,7 @@ Type=simple
 ExecStart=/usr/bin/node server
 Restart=always
 
-User=wikijs
+User=root
 Environment=NODE_ENV=production
 WorkingDirectory=/var/www/wikijs
 
