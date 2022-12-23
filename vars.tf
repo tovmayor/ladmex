@@ -8,28 +8,28 @@ variable "virtual_machines" {
             ip_address = "192.168.82.51/24"
         },
         "mediawiki1" = {
-            vmid = "152"
+            vmid = "162"
             hostname = "mediawiki1"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.52/24"
         },
         "mediawiki2" = {
-            vmid = "153"
+            vmid = "163"
             hostname = "mediawiki2"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.53/24"
         },
         "mysqlmaster" = {
-            vmid = "154"
+            vmid = "164"
             hostname = "mysqlmaster"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.54/24"               
         },  
         "mysqlslave" = {
-            vmid = "155"
+            vmid = "165"
             hostname = "mysqlslave"
             memory = "2048",
             hdd_size = "10G",
