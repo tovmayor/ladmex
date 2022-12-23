@@ -3,9 +3,10 @@
   hosts: mediawikis
   become: true
   vars:
-    db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
+    repo_path: "/root/ladmex"
     nodejs_url: "https://deb.nodesource.com/node_16.x"
     wikijs_gz_url: "https://github.com/Requarks/wiki/releases/latest/download/wiki-js.tar.gz"
+    db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
   tasks:
 
   - name: add nodejs apt key
@@ -37,7 +38,7 @@
 
   - name: copying wiki.js config file from repo to /var/www/wikijs
     copy:
-      src: /root/ladmex/config.yml
+      src: "{{ repo_path }}/config.yml"
       dest: /var/www/wikijs/
 
   - name: modifying config.yml mysql host    
@@ -48,7 +49,7 @@
 
   - name: copy systemd file for wikijs
     copy:
-      src: files/service
+      src: "{{ repo_path }}/wikijs.service"
       dest: /etc/systemd/system/wikijs.service
       mode: 644
     register: service_conf
