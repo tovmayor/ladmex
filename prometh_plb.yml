@@ -4,7 +4,7 @@
   become: true
   vars:
     repo_path: "/root/ladmex"  
-    prometh_user: promuser
+    prometheus_user: promuser
     db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
     prometh_gz_url: "https://github.com/prometheus/prometheus/releases/download/v2.37.5/prometheus-2.37.5.linux-amd64.tar.gz"
   
