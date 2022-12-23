@@ -1,5 +1,5 @@
 ---
-- name: install mediawiki, copy config and configure
+- name: install wikijs, copy config and configure
   hosts: mediawikis
   become: true
   vars:
@@ -13,7 +13,7 @@
       url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
       state: present
 
-  - name: add nodejs 16.x ppa for apt repo
+  - name: add nodejs ppa for apt repo
     apt_repository:
       repo: deb "{{ nodejs_url }}" focal main
       update_cache: yes
@@ -45,15 +45,22 @@
       dest: /var/www/wikijs/config.yml
       regexp: '^  host:'
       line: '  host: {{ db_server_ip }}'     
-    # notify: 
-    #    - restart apache2
 
-  # # - name: Run update.php script after restore mediawiki
-  # #   shell: php /var/lib/mediawiki/maintenance/update.php --quick
-  # #   ignore_errors: true
+  - name: copy systemd file for wikijs
+    copy:
+      src: files/service
+      dest: /etc/systemd/system/wikijs.service
+      mode: 644
+    register: service_conf
 
-  # handlers: 
-  # - name: restart apache2
-  #   service: 
-  #     name: apache2
-  #     state: restarted
+  - name: Reload systemd daemon
+    systemd:
+      daemon_reload: yes
+    when: service_conf.changed
+
+
+  - name: Start wikijs service
+    service:
+      name: wikijs
+      state: started
+      enabled: yes            
