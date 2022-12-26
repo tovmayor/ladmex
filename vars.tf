@@ -36,7 +36,7 @@ variable "virtual_machines" {
             ip_address = "192.168.82.55/24"          
         },          
         "observer" = {
-            vmid = "156"
+            vmid = "166"
             hostname = "observer"
             memory = "4096",
             hdd_size = "15G",
