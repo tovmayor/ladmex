@@ -1,40 +1,33 @@
 - name: install grafana
   hosts: observer
   become: true
-  #vars:
-    # repo_path: "/root/ladmex"  
+  vars:
+    repo_path: "/root/ladmex"  
     # prometheus_user: promuser
     # db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
-    # prometh_gz_url: "https://github.com/prometheus/prometheus/releases/download/v2.37.5/prometheus-2.37.5.linux-amd64.tar.gz"
+    grafana_package: "grafana_9.3.2_amd64.deb"
   
   tasks:
-  - name: copying key file
+  - name: copying grafana deb file
     copy:
-      src: /root/ladmex/grafana.key
-      dest: /usr/share/keyrings/
+      src: "{{ repo_path }}/{{ grafana_package }}"
+      dest: /root
 
-  # - name: install gpg++
-  #   apt:
-  #     name: gnupg, software-properties-common, apt-transport-https
+  - name: install a .deb package
+    ansible.builtin.apt:
+      deb: /root/"{{ grafana_package }}"
+
+  # - name: add repository
+  #   apt_repository:
+  #     repo: "deb https://apt.grafana.com stable main"             
   #     state: present
-  #     update_cache: yes
-
-  # - name: add gpg hey
-  #   apt_key:
-  #     url: "https://apt.grafana.com/gpg.key"
   #     validate_certs: no
 
-  - name: add repository
-    apt_repository:
-      repo: "deb https://apt.grafana.com stable main"             
-      state: present
-      validate_certs: no
-
-  - name: install grafana
-    apt:
-      name: grafana
-      state: latest
-      update_cache: yes
+  # - name: install grafana
+  #   apt:
+  #     name: grafana
+  #     state: latest
+  #     update_cache: yes
 
   - name: start service grafana-server
     systemd:
