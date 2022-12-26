@@ -5,7 +5,6 @@
   vars:
     repo_path: "/root/ladmex"  
     prometheus_user: promuser
-    db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
     prometh_gz_url: "https://github.com/prometheus/prometheus/releases/download/v2.37.5/prometheus-2.37.5.linux-amd64.tar.gz"
   
   tasks:
@@ -29,7 +28,7 @@
       - /etc/prometheus
       - /var/lib/prometheus
 
-  - name: download and unzip prometheus if not exist
+  - name: download and unzip prometheus
     unarchive:
       src: "{{ prometh_gz_url }}"
       dest: /root/prometheus
