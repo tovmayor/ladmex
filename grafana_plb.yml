@@ -15,7 +15,7 @@
 
   - name: install a .deb package
     ansible.builtin.apt:
-      deb: /root/"{{ grafana_package }}"
+      deb: /root/{{ grafana_package }}
 
   # - name: add repository
   #   apt_repository:
