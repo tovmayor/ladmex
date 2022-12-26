@@ -2,8 +2,8 @@
 Description=Node Exporter
 After=network-online.target
 [Service]
-User=promuser
-Group=promuser
+User=nodeexport
+Group=nodeexport
 Type=simple
 ExecStart=/usr/local/bin/node_exporter
 [Install]
