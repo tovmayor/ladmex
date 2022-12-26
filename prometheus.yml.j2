@@ -24,10 +24,14 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: 
+        - localhost:9100
+
+  - job_name: 'prometheus itself'
+    scrape_interval: 5s
+    static_configs:
+      - targets: 
       {% for host in groups['all'] %}
-      {% if inventory_hostname != host %}
         - '{{ host }}:9100'
-      {% endif %}
       {% endfor %}
 
 

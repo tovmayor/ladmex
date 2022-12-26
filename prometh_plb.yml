@@ -41,17 +41,24 @@
       src: /root/prometheus/prometheus
       dest: /usr/local/bin
       remote_src: yes
-
-  - name: remove prometheus exec file
-    file:
-      path: /root/prometheus/prometheus
-      state: absent
+      owner: "{{ prometheus_user }}"
+      group: "{{ prometheus_user }}"
+      mode: 0755
+    with_items:
+      - /root/prometheus
+      - /etc/prometheus
+      - /var/lib/prometheus
 
   - name: copying prometheus conf++ files to /etc/prometheus
     copy:
       src: /root/prometheus/
       dest: /etc/prometheus/
-      remote_src: yes          
+      remote_src: yes
+
+  - name: remove prometheus files
+    file:
+      path: /root/prometheus/prometheus
+      state: absent
 
   - name: config file
     template:
