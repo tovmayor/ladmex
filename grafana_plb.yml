@@ -8,11 +8,11 @@
     # prometh_gz_url: "https://github.com/prometheus/prometheus/releases/download/v2.37.5/prometheus-2.37.5.linux-amd64.tar.gz"
   
   tasks:
-  # - name: install gpg
-  #   apt:
-  #     name: gnupg, software-properties-common
-  #     state: present
-  #     update_cache: yes
+  - name: install gpg
+    apt:
+      name: gnupg, software-properties-common
+      state: present
+      update_cache: yes
 
   - name: add gpg hey
     apt_key:
