@@ -9,9 +9,14 @@ datasources:
   url: http://localhost:9090
   basicAuth: true
   basicAuthUser: admin
-  isDefault: false
+  basicAuthPassword: admin
+  isDefault: true
   version: 1
   editable: true
-  secureJsonData:
-    basicAuthPassword: "admin"
-editable: true
+  jsonData:
+     graphiteVersion: "1.1"
+     tlsAuth: false
+     tlsAuthWithCACert: false
+  #secureJsonData:
+
+#editable: true
