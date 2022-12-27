@@ -11,7 +11,7 @@
 - name: adding java memory restrictions file
   file:
     path: /etc/elasticsearch/jvm.options.d/jvm.options
-    state: present
+    state: file
 
 - name: insert lines in restriction file
   blockinfile: 
