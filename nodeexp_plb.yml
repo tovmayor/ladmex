@@ -1,6 +1,6 @@
 ---
 - name: install node_exporter
-  hosts: www, observer
+  hosts: all
   become: true
   vars:
     repo_path: "/root/ladmex"  
