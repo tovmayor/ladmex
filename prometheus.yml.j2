@@ -35,7 +35,7 @@ scrape_configs:
       {% endfor %} #}
 
 {% for host in groups['all'] %}
-  - job_name: '{{ group_names }}'
+  - job_name: '{{ hostvars[inventory_hostname].group_names[0] }}'
     scrape_interval: 5s
     static_configs:
       - targets: 
