@@ -8,16 +8,23 @@
   ansible.builtin.apt:
     deb: /root/{{ elastic_package }}
 
-- name: adding java memory restrictions file
-  file:
-    path: /etc/elasticsearch/jvm.options.d/jvm.options
-    state: file
+# - name: adding java memory restrictions file
+#   file:
+#     path: /etc/elasticsearch/jvm.options.d/jvm.options
+#     state: touch
 
-- name: insert lines in restriction file
-  blockinfile: 
+# - name: insert lines in restriction file
+#   blockinfile: 
+#     dest: /etc/elasticsearch/jvm.options.d/jvm.options
+#     #regexp: "^#server-id"
+#     block: |
+#       -Xms1g
+#       -Xmx1g
+
+- name: adding java memory restrictions file
+  copy:
     dest: /etc/elasticsearch/jvm.options.d/jvm.options
-    #regexp: "^#server-id"
-    block: |
+    content: |
       -Xms1g
       -Xmx1g
 
