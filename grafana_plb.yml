@@ -1,8 +1,10 @@
+---
 - name: install grafana
   hosts: observer
   become: true
   vars:
     repo_path: "/root/ladmex"  
+    deb_path: "/root"
     grafana_conf_path: "/etc/grafana"
     grafana_package: "grafana_9.3.2_amd64.deb"
     grafana_datasrc: "grafana_datasrc.yml"
@@ -12,7 +14,7 @@
   tasks:
   - name: copying grafana deb file
     copy:
-      src: "{{ repo_path }}/{{ grafana_package }}"
+      src: "{{ deb_path }}/{{ grafana_package }}"
       dest: /root
 
   - name: install a .deb package

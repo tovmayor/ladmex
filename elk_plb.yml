@@ -1,0 +1,12 @@
+---
+#
+# Playbook to install the ELK stack + Beats
+#
+- hosts: observer
+  become: true
+
+  roles:
+  - { role: elasticsearch }
+  - { role: logstash }
+  - { role: kibana }
+  - { role: filebeat }
