@@ -1,49 +1,49 @@
 ---
-- name: install elasticsearch
-  hosts: observer
-  become: true
-  vars:
-    repo_path: "/root"  
-    #filebeat_conf_path: "/etc/grafana"
-    elastic_package: "elasticsearch-7.17.8-amd64.deb"
-    # grafana_datasrc: "grafana_datasrc.yml"
-    # grafana_dash_cfg: "grafana_dash.yml"
-    # grafana_dash_json: "node-exporter-full_rev29.json"
-  
-  tasks:
-  - name: copying filebeat deb file
-    copy:
-      src: "{{ repo_path }}/{{ elastic_package }}"
-      dest: /root
+# - name: install elasticsearch
+#   hosts: observer
+become: true
+vars:
+  repo_path: "/root"  
+  #filebeat_conf_path: "/etc/grafana"
+  elastic_package: "elasticsearch-7.17.8-amd64.deb"
+  # grafana_datasrc: "grafana_datasrc.yml"
+  # grafana_dash_cfg: "grafana_dash.yml"
+  # grafana_dash_json: "node-exporter-full_rev29.json"
 
-  - name: install a .deb package
-    ansible.builtin.apt:
-      deb: /root/{{ elastic_package }}
+tasks:
+- name: copying filebeat deb file
+  copy:
+    src: "{{ repo_path }}/{{ elastic_package }}"
+    dest: /root
 
-  - name: adding java memory restrictions file
-    file:
-      path: /etc/elasticsearch/jvm.options.d/jvm.options
-      state: present
+- name: install a .deb package
+  ansible.builtin.apt:
+    deb: /root/{{ elastic_package }}
 
-  - name: insert lines in restriction file
-    blockinfile: 
-      dest: /etc/elasticsearch/jvm.options.d/jvm.options
-      #regexp: "^#server-id"
-      block: |
-        -Xms1g
-        -Xmx1g
+- name: adding java memory restrictions file
+  file:
+    path: /etc/elasticsearch/jvm.options.d/jvm.options
+    state: present
 
-  - name: start service elasticsearch 
-    systemd:
-      name: elasticsearch 
-      state: started
-      enabled: yes
+- name: insert lines in restriction file
+  blockinfile: 
+    dest: /etc/elasticsearch/jvm.options.d/jvm.options
+    #regexp: "^#server-id"
+    block: |
+      -Xms1g
+      -Xmx1g
 
-  - name: wait for service up
-    uri:
-      url: "http://127.0.0.1:9200"
-      status_code: 200
-    register: __result
-    until: __result.status == 200
-    retries: 120
-    delay: 1
+- name: start service elasticsearch 
+  systemd:
+    name: elasticsearch 
+    state: started
+    enabled: yes
+
+- name: wait for service up
+  uri:
+    url: "http://127.0.0.1:9200"
+    status_code: 200
+  register: __result
+  until: __result.status == 200
+  retries: 120
+  delay: 1
