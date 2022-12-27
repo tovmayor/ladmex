@@ -4,9 +4,12 @@
 #
 - hosts: observer
   become: true
-
   roles:
   - { role: elasticsearch }
-  - { role: logstash }
-  - { role: kibana }
+#  - { role: logstash }
+#  - { role: kibana }
+
+- hosts: observer, nginx
+  become: true
+  roles:
   - { role: filebeat }

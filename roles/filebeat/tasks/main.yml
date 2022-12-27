@@ -1,30 +1,29 @@
 ---
-- name: install filebeat
-  hosts: observer, nginx
-  become: true
-  vars:
-    repo_path: "/root"  
+#- name: install filebeat
+
+  # become: true
+  # vars:
+    
     #filebeat_conf_path: "/etc/grafana"
-    filebeat_package: "filebeat-7.17.8-amd64.deb"
-    # grafana_datasrc: "grafana_datasrc.yml"
+        # grafana_datasrc: "grafana_datasrc.yml"
     # grafana_dash_cfg: "grafana_dash.yml"
     # grafana_dash_json: "node-exporter-full_rev29.json"
   
-  tasks:
-  - name: copying filebeat deb file
-    copy:
-      src: "{{ repo_path }}/{{ filebeat_package }}"
-      dest: /root
 
-  - name: install a .deb package
-    ansible.builtin.apt:
-      deb: /root/{{ filebeat_package }}
+- name: copying filebeat deb file
+  copy:
+    src: "{{ repo_path }}/{{ filebeat_package }}"
+    dest: /root
 
-  - name: start service filebeat
-    systemd:
-      name: filebeat
-      state: started
-      enabled: yes
+- name: install a .deb package
+  ansible.builtin.apt:
+    deb: /root/{{ filebeat_package }}
+
+- name: start service filebeat
+  systemd:
+    name: filebeat
+    state: started
+    enabled: yes
 
   # - name: wait for service up
   #   uri:
