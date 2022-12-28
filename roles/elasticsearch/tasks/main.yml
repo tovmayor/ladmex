@@ -18,7 +18,7 @@
 - name: start service elasticsearch 
   systemd:
     name: elasticsearch 
-    state: started
+    state: restarted
     enabled: yes
 
 - name: wait for service up

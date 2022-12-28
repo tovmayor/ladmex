@@ -8,10 +8,24 @@
 - name: install a .deb package
   apt:
     deb: /root/{{ filebeat_package }}
+    
+- name: adding lines in filebeat.yml
+  blockinfile:
+    path: /etc/filebeat/filebeat.yml
+    insertafter: "filebeat.inputs:"
+    block: |    
+      - type: log
+        paths:
+          - /var/log/nginx/*.log
+        exclude_files: ['\.gz$']
+        enabled: false
+
+      output.logstash:
+        hosts: ["localhost:5400"]
 
 - name: start service filebeat
   systemd:
     name: filebeat
-    state: started
+    state: restarted
     enabled: yes
 

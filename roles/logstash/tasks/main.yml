@@ -8,10 +8,21 @@
   ansible.builtin.apt:
     deb: /root/{{ logstash_package }}
 
-# HERE CONFIG
+- name: copy preconfigured nginx configfile
+  copy:
+    src: logstash-nginx-es.conf
+    dest: /etc/logstash/conf.d
+
+- name: adding lines in logstash.yml
+  blockinfile:
+    path: /etc/logstash/logstash.yml
+    block: |
+      path.data: /var/lib/logstash
+      path.config: /etc/logstash/conf.d
+      path.logs: /var/log/logstash
 
 - name: start service logstash 
   systemd:
     name: logstash 
-    state: started
+    state: restarted
     enabled: yes

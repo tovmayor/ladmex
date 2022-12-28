@@ -38,6 +38,7 @@ variable "virtual_machines" {
         "observer" = {
             vmid = "166"
             hostname = "observer"
+            cores = 4
             memory = "4096",
             hdd_size = "15G",
             ip_address = "192.168.82.56/24"   
