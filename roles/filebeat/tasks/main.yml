@@ -21,7 +21,7 @@
         enabled: true
 
       output.logstash:
-        hosts: ["{{ hostvars['observer']['hostname'] }}:5400"]
+        hosts: ["{{ hostvars['observer']['host'] }}:5400"]
 
 - name: comment out output.elasticsearch
   lineinfile:
