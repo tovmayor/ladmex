@@ -1,4 +1,4 @@
 ---
 repo_path: "/root"  
 #filebeat_conf_path: "/etc/grafana"
-elastic_package: "logstash-7.17.8-amd64.deb"
+logstash_package: "logstash-7.17.8-amd64.deb"
