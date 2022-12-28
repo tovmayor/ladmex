@@ -18,10 +18,22 @@
         paths:
           - /var/log/nginx/*.log
         exclude_files: ['\.gz$']
-        enabled: false
+        enabled: true
 
       output.logstash:
         hosts: ["localhost:5400"]
+
+- name: comment out output.elasticsearch
+  lineinfile:
+      dest: /etc/filebeat/filebeat.yml
+      regexp: "^output.elasticsearch:"
+      line: "#output.elasticsearch:"    
+      
+- name: comment out output.elasticsearch
+  lineinfile:
+      dest: /etc/filebeat/filebeat.yml
+      regexp: '^hosts: ["localhost:9200"]'
+      line: '#hosts: ["localhost:9200"]'          
 
 - name: start service filebeat
   systemd:
