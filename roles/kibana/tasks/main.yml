@@ -8,6 +8,14 @@
   apt:
     deb: /root/{{ kibana_package }}
 
+- name: adding lines in kibana config file
+  blockinfile:
+    path: /etc/kibana/kibana.yml
+    block: |
+      server.port: 5601
+      server.host: "0.0.0.0"
+      elasticsearch.hosts: ["http://localhost:9200"]
+
 - name: start service kibana 
   systemd:
     name: kibana 
