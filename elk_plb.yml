@@ -7,9 +7,9 @@
   roles:
   - { role: elasticsearch }
 #  - { role: logstash }
-#  - { role: kibana }
+  - { role: kibana }
 
-- hosts: observer, nginx
+- hosts: observer, www
   become: true
   roles:
   - { role: filebeat }

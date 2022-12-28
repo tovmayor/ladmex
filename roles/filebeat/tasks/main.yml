@@ -1,14 +1,4 @@
 ---
-#- name: install filebeat
-
-  # become: true
-  # vars:
-    
-    #filebeat_conf_path: "/etc/grafana"
-        # grafana_datasrc: "grafana_datasrc.yml"
-    # grafana_dash_cfg: "grafana_dash.yml"
-    # grafana_dash_json: "node-exporter-full_rev29.json"
-  
 
 - name: copying filebeat deb file
   copy:
@@ -25,11 +15,3 @@
     state: started
     enabled: yes
 
-  # - name: wait for service up
-  #   uri:
-  #     url: "http://127.0.0.1:3000"
-  #     status_code: 200
-  #   register: __result
-  #   until: __result.status == 200
-  #   retries: 120
-  #   delay: 1

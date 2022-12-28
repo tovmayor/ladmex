@@ -1,0 +1,5 @@
+---
+
+repo_path: "/root"  
+#filebeat_conf_path: "/etc/grafana"
+kibana_package: "kibana-7.17.8-amd64.deb"
