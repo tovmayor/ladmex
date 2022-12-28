@@ -3,6 +3,7 @@ variable "virtual_machines" {
         "www" = {
             vmid = "151"
             hostname = "www"
+            cores = 2
             memory = "1024",
             hdd_size = "7G",
             ip_address = "192.168.82.51/24"
@@ -10,6 +11,7 @@ variable "virtual_machines" {
         "mediawiki1" = {
             vmid = "162"
             hostname = "mediawiki1"
+            cores = 2
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.52/24"
@@ -17,6 +19,7 @@ variable "virtual_machines" {
         "mediawiki2" = {
             vmid = "163"
             hostname = "mediawiki2"
+            cores = 2
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.53/24"
@@ -24,6 +27,7 @@ variable "virtual_machines" {
         "mysqlmaster" = {
             vmid = "164"
             hostname = "mysqlmaster"
+            cores = 2
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.54/24"               
@@ -31,6 +35,7 @@ variable "virtual_machines" {
         "mysqlslave" = {
             vmid = "165"
             hostname = "mysqlslave"
+            cores = 2
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.55/24"          

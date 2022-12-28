@@ -30,7 +30,7 @@ resource "proxmox_vm_qemu" "LinuxAdmin" {
   os_type = "cloud-init"
   agent = 1
 
-  cores = 2
+  # cores = 2
   sockets = 1
   cpu = "host"
   memory = each.value.memory
