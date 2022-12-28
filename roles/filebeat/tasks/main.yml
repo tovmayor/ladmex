@@ -32,8 +32,8 @@
 - name: comment out output.elasticsearch
   lineinfile:
       dest: /etc/filebeat/filebeat.yml
-      regexp: '^hosts: ["localhost:9200"]'
-      line: '#hosts: ["localhost:9200"]'          
+      regexp: "^  hosts: [\"localhost:9200\"]"
+      line: "#  hosts: [\"localhost:9200\"]"          
 
 - name: start service filebeat
   systemd:
