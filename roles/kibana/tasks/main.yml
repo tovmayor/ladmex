@@ -19,7 +19,7 @@
 - name: start service kibana 
   systemd:
     name: kibana 
-    state: started
+    state: restarted
     enabled: yes
 
 - name: wait for service up

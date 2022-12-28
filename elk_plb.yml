@@ -5,11 +5,11 @@
 - hosts: observer
   become: true
   roles:
-  - { role: elasticsearch }
-#  - { role: logstash }
-  - { role: kibana }
+#  - { role: elasticsearch }
+  - { role: logstash }
+#  - { role: kibana }
 
-- hosts: observer, www
-  become: true
-  roles:
-  - { role: filebeat }
+# - hosts: observer, www
+#   become: true
+#   roles:
+#   - { role: filebeat }
