@@ -6,7 +6,7 @@
     dest: /root
 
 - name: install a .deb package
-  ansible.builtin.apt:
+  apt:
     deb: /root/{{ filebeat_package }}
 
 - name: start service filebeat
