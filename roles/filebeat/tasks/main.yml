@@ -1,13 +1,13 @@
 ---
 
-- name: copying filebeat deb file
-  copy:
-    src: "{{ repo_path }}/{{ filebeat_package }}"
-    dest: /root
+# - name: copying filebeat deb file
+#   copy:
+#     src: "{{ repo_path }}/{{ filebeat_package }}"
+#     dest: /root
 
-- name: install a .deb package
-  apt:
-    deb: /root/{{ filebeat_package }}
+# - name: install a .deb package
+#   apt:
+#     deb: /root/{{ filebeat_package }}
     
 - name: adding lines in filebeat.yml
   blockinfile:
@@ -21,7 +21,7 @@
         enabled: true
 
       output.logstash:
-        hosts: ["{{ hostvars['observer']['host'] }}:5400"]
+        hosts: ["{{ groups['observer'][0] }}:5400"]
 
 - name: comment out output.elasticsearch
   lineinfile:
