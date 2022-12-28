@@ -1,5 +1,5 @@
 ---
-- name: copying filebeat deb file
+- name: copying logstash deb file
   copy:
     src: "{{ repo_path }}/{{ logstash_package }}"
     dest: /root

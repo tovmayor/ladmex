@@ -1,5 +1,5 @@
 ---
-- name: copying filebeat deb file
+- name: copying elastic deb file
   copy:
     src: "{{ repo_path }}/{{ elastic_package }}"
     dest: /root
