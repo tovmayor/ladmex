@@ -29,6 +29,7 @@ resource "proxmox_vm_qemu" "LinuxAdmin" {
   clone = var.template_name
   os_type = "cloud-init"
   agent = 1
+  ciuser = root
 
   cores = 2
   sockets = 1
