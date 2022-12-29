@@ -17,10 +17,10 @@
       line: "#output.elasticsearch:"    
       
 - name: comment out output.elasticsearch
-  lineinfile:
-      dest: /etc/filebeat/filebeat.yml
-      regexp: "*localhost:9200*"
-      line: '# \1'          
+  replace:
+      path: /etc/filebeat/filebeat.yml
+      regexp: '(.*localhost:9200.*)'
+      line: '#\1'          
 
 - name: adding lines in filebeat.yml
   blockinfile:
