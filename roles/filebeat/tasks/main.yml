@@ -20,7 +20,7 @@
   replace:
       path: /etc/filebeat/filebeat.yml
       regexp: '(.*localhost:9200.*)'
-      line: '#\1'          
+      replace: '#\1'          
 
 - name: adding lines in filebeat.yml
   blockinfile:
