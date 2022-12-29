@@ -9,14 +9,14 @@ variable "virtual_machines" {
         },
         "wiki1" = {
             vmid = "152"
-            hostname = "mediawiki1"
+            hostname = "wiki1"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.52/24"
         },
         "wiki2" = {
             vmid = "153"
-            hostname = "mediawiki2"
+            hostname = "wiki2"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.53/24"

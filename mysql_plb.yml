@@ -2,10 +2,15 @@
 #
 # install prometheus ang grafana
 
-- hosts: mysql
+- hosts: mysql_master
   become: true
   roles:
-  - role: mysql
+  - role: mysql_master
+
+- hosts: mysql_slave
+  become: true
+  roles:
+  - role: mysql_slave
 
 
 
