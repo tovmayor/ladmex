@@ -9,17 +9,18 @@
 #   apt:
 #     deb: /root/{{ filebeat_package }}
 
-- name: comment out output.elasticsearch
+
+- name: comment out elasticsearch host
   lineinfile:
       dest: /etc/filebeat/filebeat.yml
       regexp: "^output.elasticsearch:"
       line: "#output.elasticsearch:"    
       
-- name: comment out elasticsearch host
+- name: comment out output.elasticsearch
   lineinfile:
       dest: /etc/filebeat/filebeat.yml
-      regexp: "^  hosts: ["
-      line: "#  hosts: ["          
+      regexp: "*localhost:9200*"
+      line: '# \1'          
 
 - name: adding lines in filebeat.yml
   blockinfile:
