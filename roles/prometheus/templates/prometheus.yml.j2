@@ -20,11 +20,11 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: 
-        {{ groups['www'][0] }}
-        {{ groups['wiki1'][0] }}
-        {{ groups['wiki2'][0] }}
-        {{ groups['mysql_master'][0] }}
-        {{ groups['mysql_slave'][0] }}
+        {{ groups['www'][0] }}:9100
+        {{ groups['wiki1'][0] }}:9100
+        {{ groups['wiki2'][0] }}:9100
+        {{ groups['mysql_master'][0] }}:9100
+        {{ groups['mysql_slave'][0] }}:9100
 
 
       {# {% for host in groups['all'] %}
