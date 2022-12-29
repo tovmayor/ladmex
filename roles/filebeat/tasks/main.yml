@@ -1,13 +1,13 @@
 ---
 
-# - name: copying filebeat deb file
-#   copy:
-#     src: "{{ repo_path }}/{{ filebeat_package }}"
-#     dest: /root
+- name: copying filebeat deb file
+  copy:
+    src: "{{ repo_path }}/{{ filebeat_package }}"
+    dest: /root
 
-# - name: install a .deb package
-#   apt:
-#     deb: /root/{{ filebeat_package }}
+- name: install a .deb package
+  apt:
+    deb: /root/{{ filebeat_package }}
 
 
 - name: comment out elasticsearch host
