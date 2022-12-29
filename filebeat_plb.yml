@@ -1,0 +1,8 @@
+---
+#
+# install filebeat
+
+- hosts: www
+  become: true
+  roles:
+  - role: filebeat

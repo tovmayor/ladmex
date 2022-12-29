@@ -1,0 +1,11 @@
+---
+#
+# install prometheus ang grafana
+
+- hosts: mysql
+  become: true
+  roles:
+  - role: mysql
+
+
+

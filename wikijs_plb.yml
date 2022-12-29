@@ -1,0 +1,11 @@
+---
+#
+# install prometheus ang grafana
+
+- hosts: wikis
+  become: true
+  roles:
+  - role: wikijs
+
+
+

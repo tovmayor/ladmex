@@ -87,14 +87,14 @@ resource "local_file" "tf_ansible_inventory" {
     [www]
     ${proxmox_vm_qemu.LinuxAdmin["www"].default_ipv4_address} ansible_hostname=nginx
 
-    [mediawikis:children]
-    mediawiki1
-    mediawiki2
+    [wikis:children]
+    wiki1
+    wiki2
 
-    [mediawiki1]
+    [wiki1]
     ${proxmox_vm_qemu.LinuxAdmin["wiki1"].default_ipv4_address}
 
-    [mediawiki2]
+    [wiki2]
     ${proxmox_vm_qemu.LinuxAdmin["wiki2"].default_ipv4_address}
 
     [mysql:children]
