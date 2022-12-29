@@ -103,7 +103,7 @@
 
 - name: copying backup script to mysql_slave
   copy:
-    src: '{{ local_repo }}/mysql_backup.sh'
+    src: mysql_backup.sh
     dest: /root/
     mode: u=rwx,g=rx,o=rx
 
