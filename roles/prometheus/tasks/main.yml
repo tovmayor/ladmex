@@ -63,7 +63,7 @@
   
 - name: copy systemd file for prometheus
   copy:
-    src: "{{ repo_path }}/prometheus.service"
+    src: prometheus.service
     dest: /etc/systemd/system/prometheus.service
     mode: 644
   register: service_conf
