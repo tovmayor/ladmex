@@ -24,12 +24,12 @@
   lineinfile:
     dest: /etc/nginx/sites-enabled/nginx_upstream.conf
     regexp: '^server1'
-    line: "        server {{ hostvars[groups['wiki1'][0]].inventory_hostname }};" 
+    line: "        server {{ hostvars[groups['wiki1'][0]].inventory_hostname }}:3000;" 
 
 - name: setting mediawiki hosts from inventory to nginx_upstream.conf     
   lineinfile:
     dest: /etc/nginx/sites-enabled/nginx_upstream.conf
     regexp: '^server2'
-    line: "        server {{ hostvars[groups['wiki2'][0]].inventory_hostname }};"     
+    line: "        server {{ hostvars[groups['wiki2'][0]].inventory_hostname }}:3000;"     
   notify: 
       - restart nginx
