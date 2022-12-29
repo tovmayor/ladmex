@@ -1,0 +1,121 @@
+---
+
+
+- name: install mariadb-server
+  apt: 
+    name: mariadb-server
+    state: present 
+
+- name: install python3-pymysql
+  apt: 
+    name: python3-pymysql
+    state: present 
+
+# - name: remove default config from mariadb.conf.d
+#   file:
+#     path: /etc/mysql/mariadb.conf.d/50-server.cnf
+#     state: absent
+
+- name: remove default config from etc/mysql      
+  file:
+    path: /etc/mysql/my.cnf
+    state: absent
+
+# - name: copying maria-db config file from repo to mariadb.conf.d
+#   copy:
+#     src: 50-server.cnf
+#     dest: /etc/mysql/mariadb.conf.d/
+
+- name: copying maria-db config file from repo to etc/mysql
+  copy:
+    src: my.cnf
+    dest: /etc/mysql/
+
+- name: restart mariadb-server
+  service: 
+    name: mariadb
+    state: restarted
+
+- name: Create user with password, all database privileges 'WITH GRANT OPTION'
+  mysql_user:
+    name: root
+    password: MW@2022!
+    host: localhost
+    login_unix_socket: /run/mysqld/mysqld.sock
+    priv: '*.*:ALL,GRANT'
+    state: present
+
+- name: copying maria-db creds file .my.cnf from admin host (!!! NOT FROM REPO !!!) to mysql_host
+  copy:
+    src: /root/.my.cnf
+    dest: /root/
+
+- name: Grant user root from any host all privileges 'WITH GRANT OPTION'
+  mysql_user:
+    name: root
+    password: MW@2022!
+    host: '%'
+    login_unix_socket: /run/mysqld/mysqld.sock
+    priv: '*.*:ALL,GRANT'
+    state: present    
+
+- name: creating database my_wiki
+  mysql_db:
+    name: my_wiki
+    state: present
+
+- name: remove previously remained backup folder
+  file:
+    path: /root/backup/
+    state: absent      
+
+- name: copying wiki db backup folder to mysql_host
+  synchronize:
+    src: '{{ local_repo }}/backup'
+    dest: /root/
+
+- name: find gz db tables for gunzip
+  find: paths=/root/backup/my_wiki/ patterns="*.gz"
+  register: find_result
+
+- name: gunzip founded db tables      
+  command: gunzip {{ item.path }}
+  with_items: "{{ find_result.files }}"
+
+- name: restore tables to db
+  shell: mysql -e 'STOP SLAVE' && for s in `ls /root/backup/my_wiki/`; do mysql my_wiki < /root/backup/my_wiki/$s; done
+
+- name: remove backup folder
+  file:
+    path: /root/backup/
+    state: absent
+
+# Slave specific actions
+
+- name: Modify configuration file to setup server ID
+  lineinfile: 
+    dest: /etc/mysql/my.cnf 
+    regexp: "^#server-id"
+    line: "server-id=200"
+
+- name: Setup replication
+  command: mysql -uroot -e "CHANGE MASTER TO master_host='{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}', master_user='root', master_password='MW@2022!', master_use_gtid=current_pos"    
+
+- name: copying backup script to mysql_slave
+  copy:
+    src: '{{ local_repo }}/mysql_backup.sh'
+    dest: /root/
+    mode: u=rwx,g=rx,o=rx
+
+- name: Create "wiki db backup" job
+  cron:
+    name: "wiki db backup"
+    hour: "01"
+    job: "/root/mysql_backup.sh"
+
+
+
+- name: Restart mysql service
+  service: 
+    name: mariadb
+    state: restarted
