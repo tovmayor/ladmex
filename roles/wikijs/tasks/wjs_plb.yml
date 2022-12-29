@@ -1,67 +1,58 @@
 ---
-- name: install wikijs, copy config and configure
-  hosts: mediawikis
-  become: true
-  vars:
-    repo_path: "/root/ladmex"
-    nodejs_url: "https://deb.nodesource.com/node_16.x"
-    wikijs_gz_url: "https://github.com/Requarks/wiki/releases/latest/download/wiki-js.tar.gz"
-    db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
-  tasks:
 
-  - name: add nodejs apt key
-    apt_key:
-      url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-      state: present
+- name: add nodejs apt key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
 
-  - name: add nodejs ppa for apt repo
-    apt_repository:
-      repo: deb "{{ nodejs_url }}" focal main
-      update_cache: yes
+- name: add nodejs ppa for apt repo
+  apt_repository:
+    repo: deb "{{ nodejs_url }}" focal main
+    update_cache: yes
 
-  - name: Install nodejs
-    apt:
-      update_cache: yes
-      name: nodejs
-      state: present
+- name: Install nodejs
+  apt:
+    update_cache: yes
+    name: nodejs
+    state: present
 
-  - name: create dir wiki.js
-    file:
-      path: /var/www/wikijs
-      state: directory
-  
-  - name: download and unpack wiki.js
-    unarchive:
-      src: "{{ wikijs_gz_url }}"
-      dest: /var/www/wikijs
-      remote_src: yes
+- name: create dir wiki.js
+  file:
+    path: "{{ wikijs_path }}"
+    state: directory
 
-  - name: copying wiki.js config file from repo to /var/www/wikijs
-    copy:
-      src: "{{ repo_path }}/config.yml"
-      dest: /var/www/wikijs/
+- name: download and unpack wiki.js
+  unarchive:
+    src: "{{ wikijs_gz_url }}"
+    dest: "{{ wikijs_path }}"
+    remote_src: yes
 
-  - name: modifying config.yml mysql host    
-    lineinfile:
-      dest: /var/www/wikijs/config.yml
-      regexp: '^  host:'
-      line: '  host: {{ db_server_ip }}'     
+- name: copying wiki.js config file from repo to /var/www/wikijs
+  copy:
+    src: config.yml
+    dest: "{{ wikijs_path }}"
 
-  - name: copy systemd file for wikijs
-    copy:
-      src: "{{ repo_path }}/wikijs.service"
-      dest: /etc/systemd/system/wikijs.service
-      mode: 644
-    register: service_conf
+- name: modifying config.yml mysql host    
+  lineinfile:
+    dest: "{{ wikijs_path }}/config.yml"
+    regexp: '^  host:'
+    line: '  host: {{ db_server_ip }}'     
 
-  - name: Reload systemd daemon
-    systemd:
-      daemon_reload: yes
-    when: service_conf.changed
+- name: copy systemd file for wikijs
+  copy:
+    src: wikijs.service
+    dest: /etc/systemd/system/wikijs.service
+    mode: 644
+  register: service_conf
+
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: yes
+  when: service_conf.changed
 
 
-  - name: Start wikijs service
-    service:
-      name: wikijs
-      state: started
-      enabled: yes            
+- name: Start wikijs service
+  service:
+    name: wikijs
+    state: started
+    enabled: yes            

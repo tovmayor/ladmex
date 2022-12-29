@@ -1,0 +1,35 @@
+---
+- name: install nginx
+  apt: 
+    name: nginx 
+    state: present 
+
+- name: enable on boot
+  service: 
+    name: nginx 
+    state: started 
+    enabled: yes
+
+- name: remove default config from sites-enabled
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: copying nginx proxy config file from repo to sites-enabled
+  copy:
+    src: nginx_upstream.conf
+    dest: /etc/nginx/sites-enabled/
+
+- name: setting wiki hosts from inventory to nginx_upstream.conf     
+  lineinfile:
+    dest: /etc/nginx/sites-enabled/nginx_upstream.conf
+    regexp: '^server1'
+    line: "        server {{ hostvars[groups['wiki1'][0]].inventory_hostname }};" 
+
+- name: setting mediawiki hosts from inventory to nginx_upstream.conf     
+  lineinfile:
+    dest: /etc/nginx/sites-enabled/nginx_upstream.conf
+    regexp: '^server2'
+    line: "        server {{ hostvars[groups['wiki2'][0]].inventory_hostname }};"     
+  notify: 
+      - restart nginx

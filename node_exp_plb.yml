@@ -1,0 +1,11 @@
+---
+#
+# install prometheus ang grafana
+
+- hosts: all
+  become: true
+  roles:
+  - role: node_exporter
+
+
+

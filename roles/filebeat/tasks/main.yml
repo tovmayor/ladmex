@@ -9,7 +9,6 @@
   apt:
     deb: /root/{{ filebeat_package }}
 
-
 - name: comment out elasticsearch host
   lineinfile:
       dest: /etc/filebeat/filebeat.yml
@@ -35,12 +34,6 @@
 
       output.logstash:
         hosts: ["{{ groups['observer'][0] }}:5400"]
-
-# - name: comment out output.elasticsearch
-#   lineinfile:
-#       dest: /etc/filebeat/filebeat.yml
-#       regexp: "^  hosts: [\"localhost:9200\"]"
-#       line: "#  hosts: [\"localhost:9200\"]"          
 
 - name: start service filebeat
   systemd:

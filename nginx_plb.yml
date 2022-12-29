@@ -1,0 +1,11 @@
+---
+#
+# install prometheus ang grafana
+
+- hosts: www
+  become: true
+  roles:
+  - role: nginx
+
+
+

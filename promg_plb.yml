@@ -1,0 +1,11 @@
+---
+#
+# install prometheus ang grafana
+
+- hosts: observer
+  become: true
+  roles:
+  - role: prometheus
+  - role: grafana
+
+

@@ -2,12 +2,12 @@
 #
 # install the ELK stack + Beats
 
-# - hosts: observer
-#   become: true
-#   roles:
-#   - role: elasticsearch
-#   - role: logstash
-#   - role: kibana
+- hosts: observer
+  become: true
+  roles:
+  - role: elasticsearch
+  - role: logstash
+  - role: kibana
 
 - hosts: www
   become: true

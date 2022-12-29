@@ -92,10 +92,10 @@ resource "local_file" "tf_ansible_inventory" {
     mediawiki2
 
     [mediawiki1]
-    ${proxmox_vm_qemu.LinuxAdmin["mediawiki1"].default_ipv4_address}
+    ${proxmox_vm_qemu.LinuxAdmin["wiki1"].default_ipv4_address}
 
     [mediawiki2]
-    ${proxmox_vm_qemu.LinuxAdmin["mediawiki2"].default_ipv4_address}
+    ${proxmox_vm_qemu.LinuxAdmin["wiki2"].default_ipv4_address}
 
     [mysql:children]
     mysql_master

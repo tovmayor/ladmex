@@ -7,36 +7,36 @@ variable "virtual_machines" {
             hdd_size = "7G",
             ip_address = "192.168.82.51/24"
         },
-        "mediawiki1" = {
-            vmid = "162"
+        "wiki1" = {
+            vmid = "152"
             hostname = "mediawiki1"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.52/24"
         },
-        "mediawiki2" = {
-            vmid = "163"
+        "wiki2" = {
+            vmid = "153"
             hostname = "mediawiki2"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.53/24"
         },
         "mysqlmaster" = {
-            vmid = "164"
+            vmid = "154"
             hostname = "mysqlmaster"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.54/24"               
         },  
         "mysqlslave" = {
-            vmid = "165"
+            vmid = "155"
             hostname = "mysqlslave"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.55/24"          
         },          
         "observer" = {
-            vmid = "166"
+            vmid = "156"
             hostname = "observer"
             memory = "4096",
             hdd_size = "15G",

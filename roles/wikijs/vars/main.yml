@@ -1,0 +1,6 @@
+---
+#repo_path: "/root/ladmex"
+wikijs_path: "/var/www/wikijs"
+nodejs_url: "https://deb.nodesource.com/node_16.x"
+wikijs_gz_url: "https://github.com/Requarks/wiki/releases/latest/download/wiki-js.tar.gz"
+db_server_ip: "{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}"
