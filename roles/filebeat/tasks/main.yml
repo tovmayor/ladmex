@@ -9,18 +9,23 @@
   apt:
     deb: /root/{{ filebeat_package }}
 
-- name: comment out elasticsearch host
-  lineinfile:
-      dest: /etc/filebeat/filebeat.yml
-      regexp: "^output.elasticsearch:"
-      line: "#output.elasticsearch:"    
+# - name: comment out elasticsearch host
+#   lineinfile:
+#       dest: /etc/filebeat/filebeat.yml
+#       regexp: "^output.elasticsearch:"
+#       line: "#output.elasticsearch:"    
       
-- name: comment out output.elasticsearch
-  replace:
-      path: /etc/filebeat/filebeat.yml
-      regexp: '(.*localhost:9200.*)'
-      replace: '#\1'          
+# - name: comment out output.elasticsearch
+#   replace:
+#       path: /etc/filebeat/filebeat.yml
+#       regexp: '(.*localhost:9200.*)'
+#       replace: '#\1'          
 
+- name: copy filebeat config file
+  copy:
+    src: filebeat.yml
+    dest: /etc/filebeat/filebeat.yml
+    
 - name: adding lines in filebeat.yml
   blockinfile:
     path: /etc/filebeat/filebeat.yml
@@ -35,17 +40,17 @@
       output.logstash:
         hosts: ["{{ groups['observer'][0] }}:5400"]
 
-- name: comment out filestream type
-  lineinfile:
-      dest: /etc/filebeat/filebeat.yml
-      regexp: "^- type: filestream"
-      line: "#- type: filestream"            
+# - name: comment out filestream type
+#   lineinfile:
+#       dest: /etc/filebeat/filebeat.yml
+#       regexp: "^- type: filestream"
+#       line: "#- type: filestream"            
 
-- name: comment out filestream paths
-  lineinfile:
-      dest: /etc/filebeat/filebeat.yml
-      regexp: "^    - /var/log/*.log"
-      line: "#    - /var/log/*.log"        
+# - name: comment out filestream paths
+#   lineinfile:
+#       dest: /etc/filebeat/filebeat.yml
+#       regexp: "^    - /var/log/*.log"
+#       line: "#    - /var/log/*.log"        
 
 - name: start service filebeat
   systemd:
