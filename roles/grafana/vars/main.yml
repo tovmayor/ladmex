@@ -1,0 +1,8 @@
+---
+#repo_path: "/root/ladmex"  
+deb_path: "/root"
+grafana_conf_path: "/etc/grafana"
+grafana_package: "grafana_9.3.2_amd64.deb"
+grafana_datasrc: "grafana_datasrc.yml"
+grafana_dash_cfg: "grafana_dash.yml"
+grafana_dash_json: "node-exporter-full_rev29.json"

@@ -1,55 +1,43 @@
 ---
-- name: install grafana
-  hosts: observer
-  become: true
-  vars:
-    repo_path: "/root/ladmex"  
-    deb_path: "/root"
-    grafana_conf_path: "/etc/grafana"
-    grafana_package: "grafana_9.3.2_amd64.deb"
-    grafana_datasrc: "grafana_datasrc.yml"
-    grafana_dash_cfg: "grafana_dash.yml"
-    grafana_dash_json: "node-exporter-full_rev29.json"
-  
-  tasks:
-  - name: copying grafana deb file
-    copy:
-      src: "{{ deb_path }}/{{ grafana_package }}"
-      dest: /root
 
-  - name: install a .deb package
-    ansible.builtin.apt:
-      deb: /root/{{ grafana_package }}
+- name: copying grafana deb file
+  copy:
+    src: "{{ deb_path }}/{{ grafana_package }}"
+    dest: /root
 
-  - name: copying grafana datasource conf file
-    copy:
-      src: "{{ repo_path }}/{{ grafana_datasrc }}"
-      dest: "{{ grafana_conf_path }}/provisioning/datasources/" 
-  
-  - name: copying grafana dashboard conf file
-    copy:
-      src: "{{ repo_path }}/{{ grafana_dash_cfg }}"
-      dest: "{{ grafana_conf_path }}/provisioning/dashboards/"
+- name: install a .deb package
+  ansible.builtin.apt:
+    deb: /root/{{ grafana_package }}
 
-  - name: copying grafana dashboard json file
-    copy:
-      src: "{{ repo_path }}/{{ grafana_dash_json }}"
-      dest: "{{ grafana_conf_path }}/provisioning/dashboards/"
+- name: copying grafana datasource conf file
+  copy:
+    src: "{{ grafana_datasrc }}"
+    dest: "{{ grafana_conf_path }}/provisioning/datasources/" 
 
-  - name: start service grafana-server
-    systemd:
-      name: grafana-server
-      state: started
-      enabled: yes
+- name: copying grafana dashboard conf file
+  copy:
+    src: "{{ grafana_dash_cfg }}"
+    dest: "{{ grafana_conf_path }}/provisioning/dashboards/"
 
-  - name: wait for service up
-    uri:
-      url: "http://127.0.0.1:3000"
-      status_code: 200
-    register: __result
-    until: __result.status == 200
-    retries: 120
-    delay: 1
+- name: copying grafana dashboard json file
+  copy:
+    src: "{{ grafana_dash_json }}"
+    dest: "{{ grafana_conf_path }}/provisioning/dashboards/"
+
+- name: start service grafana-server
+  systemd:
+    name: grafana-server
+    state: started
+    enabled: yes
+
+- name: wait for service up
+  uri:
+    url: "http://127.0.0.1:3000"
+    status_code: 200
+  register: __result
+  until: __result.status == 200
+  retries: 120
+  delay: 1
 
   # - name: change admin password for grafana gui
   #   shell : "grafana-cli admin reset-admin-password {{ grafana_admin_password }}"
