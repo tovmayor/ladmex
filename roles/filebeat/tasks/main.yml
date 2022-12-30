@@ -40,18 +40,6 @@
       output.logstash:
         hosts: ["{{ groups['observer'][0] }}:5400"]
 
-# - name: comment out filestream type
-#   lineinfile:
-#       dest: /etc/filebeat/filebeat.yml
-#       regexp: "^- type: filestream"
-#       line: "#- type: filestream"            
-
-# - name: comment out filestream paths
-#   lineinfile:
-#       dest: /etc/filebeat/filebeat.yml
-#       regexp: "^    - /var/log/*.log"
-#       line: "#    - /var/log/*.log"        
-
 - name: start service filebeat
   systemd:
     name: filebeat
