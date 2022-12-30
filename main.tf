@@ -118,20 +118,3 @@ resource "local_file" "tf_ansible_inventory" {
   filename = "/etc/ansible/hosts"
 }
 
-# output "www_ip" {
-#   value = proxmox_vm_qemu.LinuxAdmin["vm-01"].default_ipv4_address
-# }
-
-# output "tvm_ipa" {
-#   value = {
-#     for instance in proxmox_vm_qemu.LinuxAdmin:
-#     instance.name => instance.default_ipv4_address
-#   }
-# }
-
-# output "vm_ipv4_addresses" {
-#   value = {
-#       for instance in proxmox_vm_qemu.virtual_machines:
-#       instance.name => instance.default_ipv4_address
-#   }
-# }  
