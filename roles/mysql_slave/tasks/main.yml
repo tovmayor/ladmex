@@ -1,6 +1,5 @@
 ---
 
-
 - name: install mariadb-server
   apt: 
     name: mariadb-server
@@ -98,6 +97,11 @@
     regexp: "^#server-id"
     line: "server-id=200"
 
+- name: Restart mysql service
+  service: 
+    name: mariadb
+    state: restarted
+
 - name: Setup replication
   command: mysql -uroot -e "CHANGE MASTER TO master_host='{{ hostvars[groups['mysql_master'][0]].inventory_hostname }}', master_user='root', master_password='MW@2022!', master_use_gtid=current_pos"    
 
@@ -114,8 +118,3 @@
     job: "/root/mysql_backup.sh"
 
 
-
-- name: Restart mysql service
-  service: 
-    name: mariadb
-    state: restarted

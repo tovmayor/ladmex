@@ -9,7 +9,7 @@
   - role: logstash
   - role: kibana
 
-- hosts: www
-  become: true
-  roles:
-  - role: filebeat
+# - hosts: www
+#   become: true
+#   roles:
+#   - role: filebeat
