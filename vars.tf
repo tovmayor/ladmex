@@ -1,42 +1,42 @@
 variable "virtual_machines" {
     default = {
         "www" = {
-            vmid = "151"
+            vmid = "161"
             hostname = "www"
             memory = "1024",
             hdd_size = "7G",
             ip_address = "192.168.82.51/24"
         },
         "wiki1" = {
-            vmid = "152"
+            vmid = "162"
             hostname = "wiki1"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.52/24"
         },
         "wiki2" = {
-            vmid = "153"
+            vmid = "163"
             hostname = "wiki2"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.53/24"
         },
         "mysqlmaster" = {
-            vmid = "154"
+            vmid = "164"
             hostname = "mysqlmaster"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.54/24"               
         },  
         "mysqlslave" = {
-            vmid = "155"
+            vmid = "165"
             hostname = "mysqlslave"
             memory = "2048",
             hdd_size = "10G",
             ip_address = "192.168.82.55/24"          
         },          
         "observer" = {
-            vmid = "156"
+            vmid = "166"
             hostname = "observer"
             memory = "4096",
             hdd_size = "15G",
