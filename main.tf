@@ -43,7 +43,7 @@ resource "proxmox_vm_qemu" "LinuxAdmin" {
     size = each.value.hdd_size
     type = "scsi"
     storage = "SSD"
-    iothread = 1
+    #iothread = 1
   }
   
   network {
