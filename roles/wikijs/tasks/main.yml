@@ -16,11 +16,15 @@
 #     name: nodejs
 #     state: present
 
-- name: install node.js
-  community.general.snap:
-    name: node
-    classic: true
-    channel: 16/stable
+# # - name: install node.js
+# #   community.general.snap:
+# #     name: node
+# #     classic: true
+# #     channel: 16/stable
+
+- name: Install nodejs
+  shell: snap install node --channel=16/stable --classic
+    
 
 - name: create dir wiki.js
   file:
