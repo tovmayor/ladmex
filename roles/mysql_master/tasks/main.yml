@@ -90,7 +90,7 @@
     path: /root/backup/
     state: absent
 
-# Role specific actions
+# Master role specific actions
 
 - name: Modify configuration file to setup server ID
   lineinfile: 
