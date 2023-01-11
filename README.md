@@ -2,7 +2,7 @@ Repository for linux administrator study
 
 Creating VM infrastructure on Proxmox host with:
 - nginx balanced reverse-proxy
-- wiki.js CMS - 2 VM
+- wiki.js CMS - 2 VM's
 - mysql (mariadb) primary for wiki.js database
 - mysql (mariadb) secondary for replicated database
 - monitoring VM with ELK-stack, Prometheus, Grafana
