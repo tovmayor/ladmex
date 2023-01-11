@@ -1,20 +1,20 @@
 ---
 
-# - name: add nodejs apt key
-#   apt_key:
-#     url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-#     state: present
+- name: add nodejs apt key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
 
-# - name: add nodejs ppa for apt repo
-#   apt_repository:
-#     repo: deb "{{ nodejs_url }}" focal main
-#     update_cache: yes
+- name: add nodejs ppa for apt repo
+  apt_repository:
+    repo: deb "{{ nodejs_url }}" focal main
+    update_cache: yes
 
-# - name: Install nodejs
-#   apt:
-#     update_cache: yes
-#     name: nodejs
-#     state: present
+- name: Install nodejs
+  apt:
+    update_cache: yes
+    name: nodejs
+    state: present
 
 # # - name: install node.js
 # #   community.general.snap:
@@ -22,8 +22,8 @@
 # #     classic: true
 # #     channel: 16/stable
 
-- name: Install nodejs
-  shell: snap install node --channel=16/stable --classic
+# # - name: Install nodejs
+# #   shell: snap install node --channel=16/stable --classic
     
 
 - name: create dir wiki.js
