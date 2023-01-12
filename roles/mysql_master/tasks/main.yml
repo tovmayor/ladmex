@@ -70,7 +70,7 @@
     state: absent      
 
 - name: copying wiki db backup folder to mysql_host
-  synchronize:
+  ansible.posix.synchronize:
     src: '{{ local_repo }}/backup'
     dest: /root/
 
