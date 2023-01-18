@@ -15,8 +15,9 @@
       vmid: 135
       node: "vmpool01"
       api_user: "root"
-      api_token_id: "root@pam!terraform"  
-      api_token_secret: "dfb7917c-3f39-49c5-8428-6cf0d715fb38"
+      api_password: "kesomago"
+      # api_token_id: "root@pam!terraform"  
+      # api_token_secret: "dfb7917c-3f39-49c5-8428-6cf0d715fb38"
       api_host: "vmpool01.i-tango.ru:"
       clone: 210
       clone_type: full
