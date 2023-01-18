@@ -5,8 +5,8 @@
 - name: create VM on Proxmox host
   hosts: vmpool01
   become: true
-  vars:
-    local_repo: '/root/ladmex'
+  # vars:
+  #   local_repo: '/root/ladmex'
 
   tasks:
 
@@ -14,6 +14,7 @@
     community.general.proxmox:
       vmid: 135
       node: "vmpool01"
+      api_user: "root"
       api_token_id: "root@pam!terraform"  
       api_token_secret: "dfb7917c-3f39-49c5-8428-6cf0d715fb38"
       api_host: "vmpool01.i-tango.ru:"
