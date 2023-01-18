@@ -2,8 +2,8 @@
 
 # create vm
 
-- name: install maria-db server, copy cnfig
-  hosts: mysql
+- name: create VM on Proxmox host
+  hosts: vmpool01
   become: true
   vars:
     local_repo: '/root/ladmex'
