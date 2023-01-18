@@ -1,0 +1,29 @@
+---
+
+# create vm
+
+- name: install maria-db server, copy cnfig
+  hosts: mysql
+  become: true
+  vars:
+    local_repo: '/root/ladmex'
+
+  tasks:
+
+  - name: Create a full clone of the templ with id 100
+    community.general.proxmox:
+      vmid: 135
+      node: "vmpool01"
+      api_token_id: "root@pam!terraform"  
+      api_token_secret: "dfb7917c-3f39-49c5-8428-6cf0d715fb38"
+      api_host: "vmpool01.i-tango.ru:"
+      clone: 210
+      clone_type: full
+      hostname: "passbolt"
+      storage: "SSD"
+      cpus: 1
+      cores: 2
+      disk: "10G"
+      ip_address: "192.168.82.31/24" 
+      memory: 4096
+      pubkey: "/root/.ssh/id_rsa.pub"
