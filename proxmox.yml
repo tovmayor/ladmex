@@ -26,7 +26,7 @@
       vcpus: 1
       cores: 2
       scsi:
-        scsi0: "SSD:10G,format:raw"
+        scsi0: "SSD:10G"
 
       ciuser: "root"  
       ide:
