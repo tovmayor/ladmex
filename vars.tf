@@ -41,7 +41,14 @@ variable "virtual_machines" {
             memory = "4096",
             hdd_size = "15G",
             ip_address = "192.168.82.56/24"   
-        },        
+        },
+        "passbolt" = {
+            vmid = "141"
+            hostname = "passbolt"
+            memory = "4096",
+            hdd_size = "15G",
+            ip_address = "192.168.82.57/24"   
+        }
     }
 }
 variable "ssh_key" {
