@@ -4,7 +4,7 @@ variable "virtual_machines" {
             vmid = "171"
             hostname = "www"
             memory = "1024",
-            hdd_size = "7G",
+            hdd_size = "5G",
             ip_address = "192.168.82.51/24"
         },
         "wiki1" = {
