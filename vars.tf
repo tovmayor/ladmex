@@ -4,7 +4,7 @@ variable "virtual_machines" {
             vmid = "171"
             hostname = "www"
             memory = "1024",
-            hdd_size = "5G",
+            hdd_size = "7G",
             ip_address = "192.168.82.51/24"
         },
         "wiki1" = {
@@ -48,6 +48,13 @@ variable "virtual_machines" {
             memory = "4096",
             hdd_size = "15G",
             ip_address = "192.168.82.57/24"   
+        }
+        "vaultwarden" = {
+            vmid = "143"
+            hostname = "vaultwarden"
+            memory = "4096",
+            hdd_size = "12G",
+            ip_address = "192.168.82.58/24"   
         }
     }
 }
