@@ -56,6 +56,13 @@ variable "virtual_machines" {
         #     hdd_size = "12G",
         #     ip_address = "192.168.82.58/24"   
         # }
+        "test_to_remove" = {
+            vmid = "144"
+            hostname = "test"
+            memory = "2048",
+            hdd_size = "5G",
+            ip_address = "192.168.82.59/24"   
+        }        
     }
 }
 variable "ssh_key" {
