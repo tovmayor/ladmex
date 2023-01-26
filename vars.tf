@@ -45,17 +45,17 @@ variable "virtual_machines" {
         "passbolt" = {
             vmid = "141"
             hostname = "passbolt"
-            memory = "4096",
+            memory = "2048",
             hdd_size = "15G",
             ip_address = "192.168.82.57/24"   
         }
-        "vaultwarden" = {
-            vmid = "143"
-            hostname = "vaultwarden"
-            memory = "4096",
-            hdd_size = "12G",
-            ip_address = "192.168.82.58/24"   
-        }
+        # "vaultwarden" = {
+        #     vmid = "143"
+        #     hostname = "vaultwarden"
+        #     memory = "2048",
+        #     hdd_size = "12G",
+        #     ip_address = "192.168.82.58/24"   
+        # }
     }
 }
 variable "ssh_key" {
