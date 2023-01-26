@@ -46,6 +46,7 @@ variable "virtual_machines" {
             vmid = "141"
             hostname = "passbolt"
             memory = "2048",
+            balloon = "512"
             hdd_size = "15G",
             ip_address = "192.168.82.57/24"   
         }
