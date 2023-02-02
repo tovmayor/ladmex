@@ -12,7 +12,7 @@
 
   - name: Create a full clone of the templ with id 100
     community.general.proxmox_kvm:
-      vmid: 135
+      newid: 135
       node: "vmpool01"
       api_user: "root@pam"
       api_password: "kesomago"
