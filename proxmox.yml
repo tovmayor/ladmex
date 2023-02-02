@@ -28,7 +28,7 @@
 
   tasks:
 
-  - name: Create a full clone of the templ with id 210
+  - name: create a full clone of the templ with id 210
     community.general.proxmox_kvm:
       # api_token_id: "root@pam!terraform"  
       # api_token_secret: "dfb7917c-3f39-49c5-8428-6cf0d715fb38"
@@ -62,7 +62,7 @@
       cores: "{{ core }}"
       memory: "{{ mem }}"
 
-  - name: Setting disk size
+  - name: setting disk size
     shell:
       cmd: qm resize {{ vm_new_id  }} scsi0 {{ disk_size }}
 
@@ -80,7 +80,7 @@
       vmid: "{{ vm_new_id }}"
       state: started
 
-  - name: adding newly created VM to ansible's inventory
-    add_host:
-      name: "{{ vm_new_name }}"
-      hostname: "{{ ip_value }}"
+#  - name: adding newly created VM to ansible's inventory
+#    add_host:
+#      name: "{{ vm_new_name }}"
+#      hostname: "{{ ip_value }}"
