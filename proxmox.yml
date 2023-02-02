@@ -19,14 +19,16 @@
       # api_token_id: "root@pam!terraform"  
       # api_token_secret: "dfb7917c-3f39-49c5-8428-6cf0d715fb38"
       api_host: "192.168.80.10"
-      clone: ubuntu-2004-cloud-templ
-      clone_type: full
-      name: "passbolt"
+      clone: "ubuntu-2004-cloud-templ"
+      full: yes
+
+      name: "test_vm"
       storage: "SSD"
-      vcpus: 1
+      sockets: 1
       cores: 2
+      memory: 2048
       scsi:
-        scsi0: "SSD:10G"
+        scsi0: "SSD:10G,format:raw"
 
       ciuser: "root"  
       ide:
@@ -41,5 +43,5 @@
       ipconfig:
         ipconfig0: "gw=192.168.82.1,ip=192.168.82.31/24" 
 
-      memory: 4096
+
       agent: "enabled=1"
