@@ -44,4 +44,4 @@
         ipconfig0: "gw=192.168.82.1,ip=192.168.82.31/24" 
 
 
-      agent: "enabled=1"
+      agent: 1
