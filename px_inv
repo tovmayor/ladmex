@@ -1,0 +1,8 @@
+[vmpool01]
+192.168.83.10
+
+[vmpool01:vars]
+ansible_user=root
+ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
+ansible_python_interpreter=auto_legacy
+
