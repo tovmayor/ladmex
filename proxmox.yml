@@ -1,4 +1,3 @@
-
 ---
 
 - name: create VM on Proxmox host
@@ -13,8 +12,8 @@
     vm_template: ubuntu2004-cloud
     templ_id: 211
 #   new VM parameters
-    vm_new_id: 139
-    vm_new_name: test-ssh      # VM name must DO NOT contain '_'
+    vm_new_id: 138
+    vm_new_name: test-ci      # VM name must DO NOT contain '_'
     storage_name: SSD
     sock: 1
     core: 2
@@ -22,7 +21,7 @@
     disk_size: 6G
     net_value: 'virtio,bridge=vmbr1'
     gw_value: 192.168.82.1
-    ip_value: 192.168.82.63
+    ip_value: 192.168.82.62
     nameservers: 192.168.82.2 192.168.82.3
     domain: i-tango.ru
     ssh_pub: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+BK8ZYvPaZ0VighkzODkJWpFaGGlcInIiX19xrFU/fH85LZ0B3z79z1lSRdu+cVtV98TakYpMD6rm01N8f0FpKVMOJLTqyx/VaSC2Dse1fo3qISAB5b6jpkKc9GjHBtfHGsG4i/qinakrmKgpt1AhVhX+nYhvNWLMZxVLs9UHnoN2vXtFo9wCGMh7AxMu2oTqi8zk5Fip/DrRvXBN3zBBhVfWMXUta1mTbsquirVZUdTV70vlhg7aabV7aFyN3YASrHJutIl/BC3BaPwoJAAba5YS2WIrMbp3MYcwVHsSBB0EEj39xEgZj2Se3d9Hb9t+zOShdQGVmThsdnnTSkDefmiMIFugYJDX742+Uy7m80CyJ6gm4TlYV0CKl3qqPlvwuRRwUYM8O7BFFuGKVu+sQsRdcrF0kCi+cspQUAzIWcxTfgmDkxqMjRa8GkV95hLJaTuJWBYsr1NEaPCcc2NbhThxfVd9hYIXTw+fLQlP4hJK8hFtp+OSU3WWMP05Y9E= i-tango\andrey_abramenko@DESKTOP-CQLGVSH'
@@ -30,7 +29,7 @@
   vars_prompt:
     - name: api_pass
       prompt: Enter password to PVE {{ api_user_name }} account
-      
+
 
   tasks:
 
@@ -70,8 +69,7 @@
       memory: "{{ mem }}"
 
   - name: setting disk size to {{ disk_size }}
-    shell:
-      cmd: qm resize {{ vm_new_id  }} scsi0 {{ disk_size }}
+    shell: qm resize {{ vm_new_id  }} scsi0 {{ disk_size }}
 
   - name: setting network with addr {{ ip_value }}/24
     shell: qm set {{ vm_new_id }} -net0 {{ net_value }} -ipconfig0 'gw={{ gw_value }},ip={{ ip_value }}/24' -nameserver '{{ nameservers }}' -searchdomain {{ domain }}
