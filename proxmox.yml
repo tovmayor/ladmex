@@ -79,7 +79,7 @@
       api_user: "{{ api_user_name }}"
       api_password: "{{ api_pass }}"
       node: "{{ node_name }}"
-
+      vmid: "{{ vm_new_id }}"
       update: yes
       sshkeys: "{{ ssh_pub }}"      
 
