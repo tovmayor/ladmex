@@ -48,7 +48,7 @@
       storage: "{{ storage_name }}"
       format: raw
 #      timeout: 200
-      sshkeys: "{{ ssh_pub }}"
+#      sshkeys: "{{ ssh_pub }}"
 
   - name: update VM's cpu/memory to {{ core }}c/{{ sock }}sock/{{ mem }}
     community.general.proxmox_kvm:
@@ -71,6 +71,17 @@
 
   - name: setting network with addr {{ ip_value }}/24
     shell: qm set {{ vm_new_id }} -net0 {{ net_value }} -ipconfig0 'gw={{ gw_value }},ip={{ ip_value }}/24' -nameserver '{{ nameservers }}' -searchdomain {{ domain }}
+
+  - name: add ssh pub key to VM
+    community.general.proxmox_kvm:
+
+      api_host: "{{ api_host_name }}"
+      api_user: "{{ api_user_name }}"
+      api_password: "{{ api_pass }}"
+      node: "{{ node_name }}"
+
+      update: yes
+      sshkeys: "{{ ssh_pub }}"      
 
   - name: starting VM
     community.general.proxmox_kvm:
