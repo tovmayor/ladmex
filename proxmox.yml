@@ -72,7 +72,7 @@
   - name: setting network with addr {{ ip_value }}/24
     shell: qm set {{ vm_new_id }} -net0 {{ net_value }} -ipconfig0 'gw={{ gw_value }},ip={{ ip_value }}/24' -nameserver '{{ nameservers }}' -searchdomain {{ domain }}
 
-  - name: add ssh pub key to VM
+  - name: add cloudinit user and ssh pub key to VM
     community.general.proxmox_kvm:
 
       api_host: "{{ api_host_name }}"
@@ -81,6 +81,8 @@
       node: "{{ node_name }}"
       vmid: "{{ vm_new_id }}"
       update: yes
+      ciuser: root
+      cipassword: supersecret
       sshkeys: "{{ ssh_pub }}"      
 
   - name: starting VM
