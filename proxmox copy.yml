@@ -1,6 +1,4 @@
-
 ---
-
 - name: create VM on Proxmox host
   hosts: vmpool01
   become: true
@@ -11,28 +9,28 @@
     api_user_name: root@pam
     api_pass: kesomago
     node_name: vmpool01
-    vm_template: ubuntu2004-cloud
-    templ_id: 211
+    vm_template: ubuntu2004-cloud-templ
+    templ_id: 210
 
-    vm_new_id: 139
-    vm_new_name: test-ssh      # VM name must DO NOT contain '_'
+    vm_new_id: 138
+    vm_new_name: test-prox
     storage_name: SSD
     sock: 1
     core: 2
     mem: 2048
-    disk_size: 6G
+    disk_size: 7G
     net_value: 'virtio,bridge=vmbr1'
     gw_value: 192.168.82.1
-    ip_value: 192.168.82.63
+    ip_value: 192.168.82.62
     nameservers: 192.168.82.2 192.168.82.3
     domain: i-tango.ru
-    ssh_pub: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+BK8ZYvPaZ0VighkzODkJWpFaGGlcInIiX19xrFU/fH85LZ0B3z79z1lSRdu+cVtV98TakYpMD6rm01N8f0FpKVMOJLTqyx/VaSC2Dse1fo3qISAB5b6jpkKc9GjHBtfHGsG4i/qinakrmKgpt1AhVhX+nYhvNWLMZxVLs9UHnoN2vXtFo9wCGMh7AxMu2oTqi8zk5Fip/DrRvXBN3zBBhVfWMXUta1mTbsquirVZUdTV70vlhg7aabV7aFyN3YASrHJutIl/BC3BaPwoJAAba5YS2WIrMbp3MYcwVHsSBB0EEj39xEgZj2Se3d9Hb9t+zOShdQGVmThsdnnTSkDefmiMIFugYJDX742+Uy7m80CyJ6gm4TlYV0CKl3qqPlvwuRRwUYM8O7BFFuGKVu+sQsRdcrF0kCi+cspQUAzIWcxTfgmDkxqMjRa8GkV95hLJaTuJWBYsr1NEaPCcc2NbhThxfVd9hYIXTw+fLQlP4hJK8hFtp+OSU3WWMP05Y9E= i-tango\andrey_abramenko@DESKTOP-CQLGVSH'
-    
+    ssh_pub_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+BK8ZYvPaZ0VighkzODkJWpFaGGlcInIiX19xrFU/fH85LZ0B3z79z1lSRdu+cVtV98TakYpMD6rm01N8f0FpKVMOJLTqyx/VaSC2Dse1fo3qISAB5b6jpkKc9GjHBtfHGsG4i/qinakrmKgpt1AhVhX+nYhvNWLMZxVLs9UHnoN2vXtFo9wCGMh7AxMu2oTqi8zk5Fip/DrRvXBN3zBBhVfWMXUta1mTbsquirVZUdTV70vlhg7aabV7aFyN3YASrHJutIl/BC3BaPwoJAAba5YS2WIrMbp3MYcwVHsSBB0EEj39xEgZj2Se3d9Hb9t+zOShdQGVmThsdnnTSkDefmiMIFugYJDX742+Uy7m80CyJ6gm4TlYV0CKl3qqPlvwuRRwUYM8O7BFFuGKVu+sQsRdcrF0kCi+cspQUAzIWcxTfgmDkxqMjRa8GkV95hLJaTuJWBYsr1NEaPCcc2NbhThxfVd9hYIXTw+fLQlP4hJK8hFtp+OSU3WWMP05Y9E= i-tango\andrey_abramenko@DESKTOP-CQLGVSH'
+
   tasks:
 
-  - name: create a full clone of the templ with id {{ templ_id }}
+  - name: create a full clone of the templ with id 210
     community.general.proxmox_kvm:
-      # api_token_id: "root@pam!terraform"
+      # api_token_id: "root@pam!terraform"  
       # api_token_secret: "dfb7917c-3f39-49c5-8428-6cf0d715fb38"
 
       api_host: "{{ api_host_name }}"
@@ -48,9 +46,9 @@
       storage: "{{ storage_name }}"
       format: raw
 #      timeout: 200
-      sshkeys: "{{ ssh_pub }}"
+      sshkeys: {{ ssh_pub_key  }}
 
-  - name: update VM's cpu/memory to {{ core }}c/{{ sock }}sock/{{ mem }}
+  - name: update VM's cpu/memory
     community.general.proxmox_kvm:
 
       api_host: "{{ api_host_name }}"
@@ -65,14 +63,14 @@
       cores: "{{ core }}"
       memory: "{{ mem }}"
 
-  - name: setting disk size to {{ disk_size }}
+  - name: setting disk size
     shell:
       cmd: qm resize {{ vm_new_id  }} scsi0 {{ disk_size }}
 
-  - name: setting network with addr {{ ip_value }}/24
+  - name: setting network
     shell: qm set {{ vm_new_id }} -net0 {{ net_value }} -ipconfig0 'gw={{ gw_value }},ip={{ ip_value }}/24' -nameserver '{{ nameservers }}' -searchdomain {{ domain }}
 
-  - name: starting VM
+  - name: starting VM 
     community.general.proxmox_kvm:
 
       api_host: "{{ api_host_name }}"
@@ -87,4 +85,3 @@
 #    add_host:
 #      name: "{{ vm_new_name }}"
 #      hostname: "{{ ip_value }}"
-
