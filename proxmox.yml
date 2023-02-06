@@ -82,7 +82,7 @@
       vmid: "{{ vm_new_id }}"
       update: yes
       ciuser: root
-      cipassword: supersecret
+# do not      cipassword: supersecret 
       sshkeys: "{{ ssh_pub }}"      
 
   - name: starting VM
