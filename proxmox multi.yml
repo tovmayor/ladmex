@@ -39,8 +39,6 @@
         disk_size: 6G
         ip_value: 192.168.82.63
 
-
-
   vars_prompt:
     - name: api_pass
       prompt: Enter password to PVE {{ api_user_name }} account
