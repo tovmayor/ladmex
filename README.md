@@ -11,4 +11,3 @@ Creating VM infrastructure on Proxmox host with:
 
 Creating VM's with HashiCorp Terraform and configure with ansible.
 
-Ansible playbook proxmox.yml creates VM on Proxmox node
